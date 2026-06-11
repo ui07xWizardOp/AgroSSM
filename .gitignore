@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Local configuration/cache
+Documentation/.local/
+Documentation/.cache/
+
+# OS files
+.DS_Store
+Thumbs.db

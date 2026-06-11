@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AgroEarthFM Two-Page Architecture Package</title>
+<style>
+  :root {
+    --bg:#f8fafc; --paper:#ffffff; --ink:#0f172a; --muted:#475569; --soft:#e2e8f0;
+    --green:#16a34a; --green-bg:#dcfce7;
+    --blue:#2563eb; --blue-bg:#dbeafe;
+    --amber:#d97706; --amber-bg:#fef3c7;
+    --pink:#db2777; --pink-bg:#fce7f3;
+    --purple:#7c3aed; --purple-bg:#ede9fe;
+    --cyan:#0284c7; --cyan-bg:#e0f2fe;
+    --yellow:#ca8a04; --yellow-bg:#fef9c3;
+    --red:#dc2626; --red-bg:#fee2e2;
+    --orange:#ea580c; --orange-bg:#fff7ed;
+    --slate:#334155; --slate-bg:#f1f5f9;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background:var(--bg); color:var(--ink); font-family: Inter, Segoe UI, Arial, sans-serif; }
+  body { padding: 28px; }
+  .sheet {
+    width: 1680px;
+    min-height: 1120px;
+    margin: 0 auto 34px auto;
+    background: var(--paper);
+    border: 1px solid var(--soft);
+    border-radius: 26px;
+    box-shadow: 0 10px 32px rgba(15,23,42,.12);
+    padding: 34px 38px;
+    page-break-after: always;
+  }
+  .sheet:last-child { page-break-after: auto; }
+  .header {
+    background: var(--ink);
+    color:#fff;
+    border-radius: 22px;
+    padding: 24px 28px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .header h1 { margin:0; font-size: 36px; letter-spacing:.2px; }
+  .header p { margin: 8px 0 0; color:#cbd5e1; font-size: 18px; }
+  .subtitle { font-size: 18px; color: var(--muted); text-align:center; margin: -8px 0 18px; }
+  .panel { border: 2px solid var(--soft); background:#fff; border-radius: 22px; padding: 22px; margin-top: 18px; }
+  .panel-title { font-weight: 900; color:#334155; letter-spacing:.4px; margin-bottom: 16px; font-size: 18px; }
+  .section-title { font-weight: 900; text-align:center; font-size: 21px; margin: 16px 0; color:#111827; }
+  .grid { display:grid; gap: 18px; }
+  .grid-5 { grid-template-columns: repeat(5, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .card {
+    border: 3px solid var(--soft);
+    border-radius: 20px;
+    padding: 16px 18px;
+    background:#fff;
+    min-height: 122px;
+    box-shadow: 0 4px 12px rgba(15,23,42,.07);
+  }
+  .card h3 { margin: 0 0 9px; text-align:center; font-size: 19px; line-height: 1.15; color:#0f172a; }
+  .card ul { margin:0; padding-left: 18px; color:var(--muted); font-size: 15.5px; line-height: 1.38; }
+  .card p { margin:0; color:var(--muted); font-size: 15.5px; line-height:1.38; }
+  .compact { min-height: 104px; }
+  .wide { max-width: 1100px; margin: 0 auto; min-height: 110px; }
+  .arrow { text-align:center; font-weight:900; font-size: 36px; color:#64748b; margin: 8px 0 2px; line-height: 1; }
+  .small-arrow { text-align:center; font-weight:900; color:#64748b; font-size: 26px; margin: 4px 0; }
+  .green { border-color:var(--green); background:var(--green-bg); }
+  .blue { border-color:var(--blue); background:var(--blue-bg); }
+  .amber { border-color:var(--amber); background:var(--amber-bg); }
+  .pink { border-color:var(--pink); background:var(--pink-bg); }
+  .purple { border-color:var(--purple); background:var(--purple-bg); }
+  .cyan { border-color:var(--cyan); background:var(--cyan-bg); }
+  .yellow { border-color:var(--yellow); background:var(--yellow-bg); }
+  .red { border-color:var(--red); background:var(--red-bg); }
+  .orange { border-color:var(--orange); background:var(--orange-bg); }
+  .slate { border-color:var(--slate); background:var(--slate-bg); }
+  .gray { border-color:#64748b; background:#f8fafc; }
+  .dashed { border-style:dashed; }
+  .state { max-width: 980px; margin:0 auto; border-color:var(--purple); background:var(--purple-bg); }
+  .rule { font-weight:800; color:#0f172a; }
+  table { width:100%; border-collapse: collapse; font-size: 14.5px; }
+  th, td { border:1px solid #cbd5e1; padding:9px 10px; vertical-align: top; }
+  th { background:#0f172a; color:white; font-weight:800; }
+  td { color:#334155; line-height:1.3; }
+  .mini-table th { background:#334155; }
+  .equation {
+    background:#0f172a; color:#fff; border-radius:16px; padding:14px 18px; text-align:center;
+    font-size: 20px; font-weight: 800; margin: 12px 0;
+  }
+  .callout {
+    border-left: 7px solid var(--orange); background:#fff7ed; border-radius: 14px; padding: 14px 18px;
+    color:#334155; font-size: 16px; line-height:1.42; margin-top: 16px;
+  }
+  .footer {
+    margin-top:18px; background:#0f172a; color:#fff; border-radius:18px; padding:16px 22px; text-align:center;
+  }
+  .footer strong { display:block; font-size:18px; margin-bottom:5px; }
+  .footer span { color:#cbd5e1; font-size:15.5px; }
+  .two-col { display:grid; grid-template-columns: 1.05fr .95fr; gap:18px; }
+  .badge { display:inline-block; padding:3px 8px; border-radius:999px; background:#e2e8f0; color:#334155; font-weight:800; font-size: 12px; }
+  @media print {
+    body { padding:0; background:white; }
+    .sheet { width:100%; min-height: auto; box-shadow:none; border-radius:0; margin:0; page-break-after: always; }
+    @page { size: A3 landscape; margin: 10mm; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<section class="sheet">
+  <div class="header">
+    <h1>AgroEarthFM-MVP Architecture — Page 1</h1>
+    <p>Clean high-level model flow for multimodal drought–phenology representation learning</p>
+  </div>
+  <div class="subtitle">Purpose: show the complete model pipeline without overloading the visual layout.</div>
+
+  <div class="panel">
+    <div class="panel-title">A. MAIN INFERENCE PIPELINE</div>
+
+    <div class="section-title">1. Multi-Resolution Inputs</div>
+    <div class="grid grid-5">
+      <div class="card green compact"><h3>EO / Vegetation</h3><ul><li>HLS, Sentinel‑2, Landsat</li><li>Optional SAR fallback</li><li>NDVI, EVI, NDWI, LAI/FAPAR if available</li><li>Native: 10–30 m</li></ul></div>
+      <div class="card blue compact"><h3>Weather / Climate</h3><ul><li>Rainfall, temperature</li><li>Humidity, radiation, wind</li><li>VPD / ET drivers</li><li>Native coarse scale retained</li></ul></div>
+      <div class="card amber compact"><h3>Soil / Hydro</h3><ul><li>SoilGrids, SMAP/CCI</li><li>Water capacity, soil texture</li><li>DEM/topography optional</li><li>Uncertainty retained</li></ul></div>
+      <div class="card pink compact"><h3>Crop Context</h3><ul><li>Crop type, crop calendar</li><li>Planting window</li><li>Crop-mask confidence</li><li>Irrigation proxy if known</li></ul></div>
+      <div class="card purple dashed compact"><h3>Validation Labels</h3><ul><li>Phenology/stress/yield labels</li><li>Drought-event records</li><li>Administrative yield if field labels absent</li><li>Validated only at label scale</li></ul></div>
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="card gray wide"><h3>2. Quality-Controlled Multi-Resolution Datacube</h3>
+      <ul><li><span class="rule">No forced 10 m upscaling:</span> coarse climate, soil moisture, and groundwater signals remain scale-aware.</li><li>Stores CRS/time metadata, native scale, cloud/gap masks, crop-mask confidence, modality-present masks, data-quality flags, and locked no-leakage train/validation/test splits.</li></ul>
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="section-title">3. Modality-Specific Encoders</div>
+    <div class="grid grid-4">
+      <div class="card green compact"><h3>EO Temporal Encoder</h3><ul><li>Compact ViT / CNN‑ViT</li><li>Spectral + temporal patch tokens</li><li>Vegetation trajectory features</li></ul></div>
+      <div class="card blue compact"><h3>Weather Temporal Encoder</h3><ul><li>Transformer / TCN / GRU-hybrid</li><li>Lag-aware climate forcing</li><li>Heat/rainfall stress patterns</li></ul></div>
+      <div class="card amber compact"><h3>Soil / Static Encoder</h3><ul><li>MLP or optional shared GNN</li><li>Soil and hydro-context tokens</li><li>No duplicate topology GNN</li></ul></div>
+      <div class="card pink compact"><h3>Crop Calendar Encoder</h3><ul><li>Crop type and phenology prior</li><li>Planting-window features</li><li>Explicit AGDD accumulator</li></ul></div>
+    </div>
+    <div class="card slate wide" style="margin-top:18px; min-height:82px;"><h3>Missing-Modality Handler</h3><p style="text-align:center;">Learned null tokens + modality-present masks + modality dropout, so the model degrades gracefully when irrigation, SAR, groundwater, or soil moisture is unavailable.</p></div>
+
+    <div class="arrow">↓</div>
+
+    <div class="section-title">4. Fusion and Temporal Memory</div>
+    <div class="grid grid-2" style="max-width:1180px; margin:0 auto;">
+      <div class="card cyan"><h3>Scale-Aware Ordered Fusion</h3><ul><li>Cross-resolution attention or gated fusion</li><li>Process-informed order: weather → soil/water → vegetation → phenology</li><li>Token budget controlled to avoid transformer blow-up</li></ul></div>
+      <div class="card yellow"><h3>Hierarchical Temporal Memory</h3><ul><li>Fine path: 5–10 day vegetation/stress dynamics</li><li>Coarse path: monthly/seasonal climate context</li><li>Tracks lagged drought, recovery, AGDD, and stress accumulation</li></ul></div>
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="card state"><h3>5. Shared Agro‑Ecosystem State z<sub>t</sub></h3>
+      <p style="text-align:center;">Encodes vegetation health, soil-water state, phenology state, water/heat stress accumulation, latent residual-water anomaly, and predictive uncertainty.</p>
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="section-title">6. Output Heads</div>
+    <div class="grid grid-5">
+      <div class="card red compact"><h3>Crop Stress</h3><ul><li>Water/heat stress score</li><li>Event probability</li><li>Uncertainty</li></ul></div>
+      <div class="card green compact"><h3>Phenology Forecast</h3><ul><li>Current stage</li><li>Next transition timing</li><li>Transition probability</li></ul></div>
+      <div class="card blue compact"><h3>Drought Trajectory</h3><ul><li>Onset, intensity, recovery</li><li>Lead-time forecast</li><li>Stress evolution</li></ul></div>
+      <div class="card pink compact"><h3>Yield‑Risk / Anomaly</h3><ul><li>Yield anomaly</li><li>Below-threshold risk</li><li>Production risk only</li></ul></div>
+      <div class="card gray compact"><h3>Residual Water + Uncertainty</h3><ul><li>Latent unobserved water input</li><li>Not automatically irrigation</li><li>Error/confounder signal</li></ul></div>
+    </div>
+  </div>
+
+  <div class="footer"><strong>Claim boundary for Page 1</strong><span>This is an agricultural production-risk architecture, not a direct food-security prediction system and not a fully validated causal counterfactual engine.</span></div>
+</section>
+
+<!-- PAGE 2 -->
+<section class="sheet">
+  <div class="header">
+    <h1>AgroEarthFM-MVP Architecture — Page 2</h1>
+    <p>Detailed training objectives, physics constraints, causal diagnostics, validation metrics, and acceptance gates</p>
+  </div>
+  <div class="subtitle">Purpose: preserve the detailed technical information without congesting the architecture diagram.</div>
+
+  <div class="two-col">
+    <div class="panel" style="margin-top:0;">
+      <div class="panel-title">B. TRAINING OBJECTIVES AND LOSS DESIGN</div>
+      <div class="grid grid-2">
+        <div class="card"><h3>Sequential Process-Centered SSL</h3><ul><li>SSL‑1: masked spatiotemporal reconstruction</li><li>SSL‑2: cross-modal masked prediction</li><li>SSL‑3: future vegetation trajectory prediction</li><li>SSL‑4: phenology pseudo-transition prediction</li><li>SSL‑5: drought stress trajectory prediction</li><li>Scenario augmentation only after physics validation</li></ul></div>
+        <div class="card"><h3>Stability Monitoring</h3><ul><li>Embedding variance and rank</li><li>Collapse diagnostics</li><li>Gradient norms and gradient conflicts</li><li>Linear-probe tracking</li><li>Objective-level ablation before full multi-task training</li></ul></div>
+      </div>
+      <div class="equation">L<sub>total</sub> = Σ α<sub>i</sub>L<sub>SSL_i</sub> + λ<sub>water</sub>(t)L<sub>water</sub> + λ<sub>growth</sub>(t)L<sub>growth</sub> + λ<sub>DAG</sub>(t)L<sub>DAG</sub> + λ<sub>calib</sub>L<sub>calib</sub></div>
+      <div class="callout"><strong>Training rule:</strong> start with representation learning, then add process objectives, then weak physics, and only then temporal-DAG diagnostics. Do not activate all losses at full strength from the beginning.</div>
+    </div>
+
+    <div class="panel" style="margin-top:0;">
+      <div class="panel-title">C. PHYSICS AND CAUSAL-INFORMED STRUCTURE</div>
+      <div class="card purple"><h3>Weak Water-Balance Regularisation</h3>
+        <div class="equation" style="font-size:18px; margin:8px 0;">ΔSM = P + I<sub>latent</sub> − ET − R − D + ε</div>
+        <ul><li>I<sub>latent</sub> represents unobserved water input, possible irrigation, groundwater, or residual mismatch.</li><li>Residuals must not be automatically interpreted as irrigation without external validation.</li></ul>
+      </div>
+      <div class="card yellow" style="margin-top:14px;"><h3>Plant-Growth Constraint</h3><ul><li>Uses AGDD, water availability, radiation, and crop-stage-specific stress sensitivity.</li><li>AGDD is explicitly accumulated from planting date: AGDD<sub>t</sub> = Σ max(0, T<sub>mean</sub> − T<sub>base</sub>).</li></ul></div>
+      <div class="card red" style="margin-top:14px;"><h3>Temporal-DAG Correction</h3><ul><li>No same-time bidirectional causal cycles.</li><li>CropStage<sub>t</sub> → VegetationHealth<sub>t</sub></li><li>VegetationHealth<sub>t</sub> → CropStage<sub>t+1</sub></li><li>VegetationHealth<sub>t</sub>, CropStage<sub>t</sub>, Stress<sub>t</sub> → YieldRisk<sub>t+1</sub></li></ul></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">D. VALIDATION MATRIX: HOW EACH CLAIM IS TESTED</div>
+    <table>
+      <thead><tr><th>Research Claim</th><th>Validation Method</th><th>Baselines / Controls</th><th>Acceptance Signal</th></tr></thead>
+      <tbody>
+        <tr><td>Joint drought + phenology modeling improves representation quality.</td><td>Compare joint model against drought-only and phenology-only variants.</td><td>Single-domain SSL, supervised-from-scratch.</td><td>Improved transfer, fine-tuning efficiency, or extreme-event skill.</td></tr>
+        <tr><td>Multimodal fusion adds value.</td><td>Satellite-only, weather-only, soil-only, and fused model comparison.</td><td>Best single-modality baseline.</td><td>Fused model improves at least one primary task or OOD split.</td></tr>
+        <tr><td>Physics improves reliability.</td><td>With/without physics loss; residual and task tradeoff analysis.</td><td>No-physics multimodal model.</td><td>Lower physical residuals without material task collapse.</td></tr>
+        <tr><td>Causal-informed structure is plausible.</td><td>Temporal-DAG acyclicity, sign checks, monotonicity, invariance, known-event tests.</td><td>Non-DAG or non-causal fusion model.</td><td>Stable, domain-consistent scenario behavior; no overclaiming as causal proof.</td></tr>
+        <tr><td>Model handles difficult conditions.</td><td>Out-of-region, out-of-year, and extreme drought-event holdouts.</td><td>Persistence, XGBoost/RF, LSTM/TCN, drought-index baselines.</td><td>Improved or more stable skill under transfer and tail events.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid grid-3" style="margin-top:18px;">
+    <div class="panel" style="margin-top:0;">
+      <div class="panel-title">E. TASK METRICS</div>
+      <table class="mini-table">
+        <thead><tr><th>Task</th><th>Metrics</th></tr></thead>
+        <tbody>
+          <tr><td>Crop stress</td><td>AUROC, AUPRC, F1, event recall, spatial IoU</td></tr>
+          <tr><td>Phenology</td><td>MAE days, stage accuracy, transition F1, calibration</td></tr>
+          <tr><td>Drought</td><td>RMSE, onset F1, lead-time skill</td></tr>
+          <tr><td>Yield-risk</td><td>MAE/RMSE/R², AUC/F1, calibration</td></tr>
+          <tr><td>Physics</td><td>Water-balance residual, impossible-state rate</td></tr>
+          <tr><td>Calibration</td><td>Brier score, ECE, reliability curves</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" style="margin-top:0;">
+      <div class="panel-title">F. BASELINES AND ABLATIONS</div>
+      <div class="card"><h3>Required Baselines</h3><ul><li>Climatology and persistence</li><li>GDD phenology model</li><li>SPI/SPEI/VHI drought models</li><li>RF/XGBoost and LSTM/TCN</li><li>Satellite-only, weather-only, soil-only</li><li>Existing GeoFM features if feasible</li></ul></div>
+      <div class="card" style="margin-top:12px;"><h3>Required Ablations</h3><ul><li>No physics</li><li>No process SSL</li><li>No crop calendar</li><li>No weather/soil context</li><li>No missing-modality training</li></ul></div>
+    </div>
+
+    <div class="panel" style="margin-top:0;">
+      <div class="panel-title">G. ACCEPTANCE GATES</div>
+      <table class="mini-table">
+        <thead><tr><th>Gate</th><th>Go / No-Go Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>G0</td><td>Scope lock: crop, region, tasks, metrics fixed.</td></tr>
+          <tr><td>G1</td><td>Data ready: labels, masks, missingness acceptable.</td></tr>
+          <tr><td>G2</td><td>Baselines beat climatology/persistence.</td></tr>
+          <tr><td>G3</td><td>Fusion improves over single-modality.</td></tr>
+          <tr><td>G4</td><td>Process SSL improves transfer or efficiency.</td></tr>
+          <tr><td>G5</td><td>Physics improves consistency without task collapse.</td></tr>
+          <tr><td>G6</td><td>DAG diagnostics pass sign/invariance checks.</td></tr>
+          <tr><td>G7</td><td>Reproducible, bounded, manuscript-ready claims.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">H. NON-NEGOTIABLE ANTI-FAILURE RULES</div>
+    <div class="grid grid-4">
+      <div class="card orange compact"><h3>No False Precision</h3><p>Coarse weather/soil products may guide predictions but must not be interpreted as true 10 m observations.</p></div>
+      <div class="card orange compact"><h3>No Temporal Leakage</h3><p>Forecasting tasks cannot use future EO, future weather, full-season composites, or target-year labels.</p></div>
+      <div class="card orange compact"><h3>No Overclaiming</h3><p>Outputs are agricultural production risk, not direct food-security risk, unless socioeconomic layers are added.</p></div>
+      <div class="card orange compact"><h3>No Unsupported Causality</h3><p>Scenario outputs are not decision-grade causal counterfactuals unless externally validated.</p></div>
+    </div>
+  </div>
+
+  <div class="footer"><strong>Deferred beyond Year‑1 MVP</strong><span>Formal counterfactual module • neural causal discovery • socioeconomic food-security layer • global multi-biome scaling • full DSSAT/APSIM/AquaCrop coupling if detailed management data become available</span></div>
+</section>
+
+</body>
+</html>

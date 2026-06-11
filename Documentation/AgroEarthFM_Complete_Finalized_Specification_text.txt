@@ -1,0 +1,1927 @@
+
+
+--- PAGE 1 ---
+AgroEarthFM
+Complete Finalized Specification
+Scope-Lock, Data-Readiness, and Comprehensive Research Blueprint
+Document Version: 2.0 (Finalized)
+Date: 2026-05-22
+Status: Pre-Implementation Specification
+Classification: Research Prototype Specification
+
+--- PAGE 2 ---
+I
+Table of Contents
+Part I: Research Foundation .................................................................................................. 1
+1. Research Vision and Background ....................................................................................1
+1.1 The Scientific Gap ................................................................................................... 1
+1.2 Research Direction ...................................................................................................1
+1.3 Long-Term Vision (Phase 2 and Beyond) ............................................................... 2
+2. Revised Core Hypothesis .................................................................................................2
+2.1 Final Revised Hypothesis ........................................................................................ 2
+2.2 Hypothesis Rationale ............................................................................................... 2
+2.3 Hypothesis Scope Boundary ....................................................................................2
+3. Atomic Testable Claims ...................................................................................................3
+3.1 Claim Register ......................................................................................................... 3
+3.2 Claim Validation Priority .........................................................................................3
+4. Causal Chain and Temporal DAG ................................................................................... 3
+4.1 The Agro-Ecosystem Process Chain ........................................................................3
+4.2 Original Causal Graph (DEFECTIVE — Contains DAG Cycle) ............................ 4
+4.3 Revised Temporal DAG (FINAL) ...........................................................................4
+4.4 DAG Structural Properties .......................................................................................4
+4.5 Key Causal Relationships Explained .......................................................................4
+Part II: Architecture Specification .........................................................................................5
+5. Complete Model Architecture ......................................................................................... 5
+5.1 MVP Architecture (Final) ........................................................................................5
+5.2 Component Specifications ....................................................................................... 5
+5.3 Components Deferred from MVP ............................................................................7
+5.4 Model Size and Token Budget .................................................................................7
+6. Missing Modality Protocol .............................................................................................. 7
+6.1 Design ...................................................................................................................... 7
+6.2 Missing-Modality Test Matrix .................................................................................8
+
+--- PAGE 3 ---
+II
+Part III: Data Strategy ............................................................................................................ 8
+7. Multi-Resolution Datacube Design ................................................................................. 8
+7.1 Core Principle .......................................................................................................... 8
+7.2 Resolution Tiers .......................................................................................................8
+7.3 Datacube Construction Protocol .............................................................................. 9
+8. Complete Data Source Catalog ........................................................................................9
+8.1 Satellite Imagery ...................................................................................................... 9
+8.2 Vegetation Indices ................................................................................................... 9
+8.3 Climate Data ............................................................................................................ 9
+8.4 Soil Data ................................................................................................................ 10
+8.5 Soil Moisture ..........................................................................................................10
+8.6 Groundwater .......................................................................................................... 10
+8.7 Crop Calendar and Crop Mask .............................................................................. 10
+8.8 Yield Labels ...........................................................................................................11
+8.9 Irrigation and Management Proxies .......................................................................11
+9. Scope-Lock Specifications ............................................................................................ 11
+9.1 Crop Selection ........................................................................................................11
+9.2 Study Region Selection ..........................................................................................11
+9.3 Region Selection Criteria Verification .................................................................. 12
+9.4 Temporal Coverage ................................................................................................12
+9.5 Train / Validation / Test Split Protocol ..................................................................12
+9.6 Label Sources and Scales .......................................................................................13
+10. Data Processing Pipeline ............................................................................................. 13
+10.1 Pipeline Stages .....................................................................................................13
+10.2 Cloud Contamination Protocol ............................................................................ 14
+11. Storage and Compute Estimates .................................................................................. 14
+11.1 Storage Estimates .................................................................................................14
+11.2 Compute Estimates .............................................................................................. 14
+11.3 Reproducibility Requirements ............................................................................. 15
+
+--- PAGE 4 ---
+III
+Part IV: Self-Supervised Learning .......................................................................................15
+12. SSL Objective Specifications ...................................................................................... 15
+12.1 SSL Objective Sequence ......................................................................................15
+12.2 Detailed Objective Descriptions .......................................................................... 15
+13. Loss Function Specification .........................................................................................16
+13.1 Total Training Loss ..............................................................................................17
+13.2 SSL Objective Weight Ranges ............................................................................ 17
+13.3 Physics Loss Weight Warm-up Schedules .......................................................... 17
+13.4 Training Phase Schedule ......................................................................................17
+13.5 Gradient Monitoring ............................................................................................ 17
+14. SSL Stability Monitoring .............................................................................................18
+14.1 Monitored Quantities ........................................................................................... 18
+14.2 Collapse Response Protocol .................................................................................18
+Part V: Physics Framework ..................................................................................................18
+15. Water-Balance Constraint ............................................................................................18
+15.1 Revised Water-Balance Equation ........................................................................ 18
+15.2 I_latent: Latent Residual Water-Input Inference ................................................. 19
+15.3 Physics Loss Design ............................................................................................ 19
+15.4 Scale Considerations for Water Balance ............................................................. 19
+16. Plant-Growth Constraint .............................................................................................. 19
+16.1 Growing Degree Days Accumulation ..................................................................19
+16.2 Growth Constraint Formulation ...........................................................................20
+16.3 Plant Growth Validation Metrics .........................................................................20
+17. Physics Acceptance Criteria ........................................................................................ 20
+Part VI: Causal Framework ................................................................................................. 20
+18. Temporal DAG Specification ...................................................................................... 21
+18.1 Complete Temporal DAG Equations ...................................................................21
+18.2 Edge Strength Learning ....................................................................................... 21
+18.3 Causal Loss .......................................................................................................... 21
+
+--- PAGE 5 ---
+IV
+19. Causal Validation Metrics ........................................................................................... 21
+19.1 Causal Validation Tests ....................................................................................... 21
+19.2 Causal Terminology Guidelines .......................................................................... 22
+20. Counterfactual Module Status ..................................................................................... 22
+20.1 Phased Counterfactual Plan ................................................................................. 22
+Part VII: Evaluation Framework .........................................................................................22
+21. Baseline Specifications ................................................................................................ 22
+21.1 Required Baselines .............................................................................................. 22
+22. Evaluation Split Protocol ............................................................................................. 23
+23. Task Metrics and Thresholds .......................................................................................23
+23.1 Crop Stress Detection .......................................................................................... 23
+23.2 Phenology Forecasting .........................................................................................23
+23.3 Drought Forecasting ............................................................................................ 24
+23.4 Yield-Risk Prediction .......................................................................................... 24
+23.5 Representation Quality ........................................................................................ 24
+23.6 Physics Consistency .............................................................................................24
+23.7 Causal Plausibility ............................................................................................... 25
+23.8 Calibration ........................................................................................................... 25
+Part VIII: Implementation Roadmap .................................................................................. 25
+24. 52-Week MVRC Roadmap ..........................................................................................25
+24.1 Phase Breakdown .................................................................................................25
+25. Implementation Gates .................................................................................................. 26
+26. Compute and Reproducibility Plan ..............................................................................26
+26.1 Compute Budget .................................................................................................. 26
+Part IX: Risk and Mitigation ................................................................................................26
+27. Risk Register ................................................................................................................26
+28. Fallback Paths Summary ............................................................................................. 27
+29. Ethical and Communication Constraints ..................................................................... 27
+29.1 Allowed Language ...............................................................................................28
+
+--- PAGE 6 ---
+V
+29.2 Prohibited Language (in MVRC/Year 1) .............................................................28
+29.3 Required Disclaimers ...........................................................................................28
+Part X: Validation History and Corrections ....................................................................... 28
+30. Blocker Resolutions (All Resolved) ............................................................................ 28
+30.1 B1: DAG Cycle — RESOLVED ......................................................................... 28
+30.2 B2: Timeline Realism — RESOLVED ................................................................28
+30.3 B3: Irrigation Data Gap — RESOLVED .............................................................28
+30.4 B4: Food-Security Overreach — RESOLVED ....................................................29
+31. High-Priority Resolutions (All Resolved) ................................................................... 29
+32. Medium-Priority Resolutions (All Resolved) ..............................................................29
+33. Terminology Corrections .............................................................................................29
+34. Reference Corrections ..................................................................................................30
+Appendices ..............................................................................................................................30
+Appendix A: Complete Terminology Mapping .................................................................30
+Appendix B: Complete Variable Catalog .......................................................................... 30
+B.1 Satellite Variables ................................................................................................. 30
+B.2 Climate Variables ..................................................................................................31
+B.3 Soil Variables ........................................................................................................ 31
+Appendix C: Data License Summary ................................................................................ 31
+Appendix D: Domain Knowledge Checklist (Weeks 9-12) .............................................. 32
+D.1 Agronomy Fundamentals ......................................................................................32
+D.2 Drought Science ....................................................................................................32
+D.3 Remote Sensing for Agriculture ........................................................................... 32
+D.4 Foundation Models and SSL .................................................................................32
+Appendix E: Key Equations Summary ..............................................................................33
+Appendix F: Final Acceptable Claim (If Results Support) ................................................33
+Note: Right-click the Table of Contents and select Update Field to refresh page numbers after opening.
+
+--- PAGE 7 ---
+AgroEarthFM — Complete Finalized Specification
+1
+Part I: Research Foundation
+1. Research Vision and Background
+1.1 The Scientific Gap
+Current geospatial foundation models (GeoFMs) such as SatMAE, DOFA, PhilEO, and
+TerraFM learn powerful visual representations from Earth observation data, but they are
+fundamentally limited in the agro-ecosystem domain for three critical reasons. First, they
+learn appearance-based representations optimized for image reconstruction or contrastive
+objectives, not process-centered representations that understand how drought stress
+propagates through soil moisture decline, vegetation stress, phenology disruption, and
+ultimately crop yield reduction. Second, they treat each pixel or patch independently,
+ignoring the temporal causal chain that connects climate forcing to agricultural outcomes.
+Third, they lack physics-awareness — they can detect that a field looks stressed but cannot
+enforce or verify that their representations are consistent with basic water-balance or plant-
+growth constraints.
+The central innovation of AgroEarthFM is to move beyond appearance-based geospatial
+representation learning toward process-centered representation learning that jointly models
+drought dynamics and crop phenology within physical and causal constraints. This means
+the model does not merely learn to reconstruct satellite imagery — it learns to predict how
+drought stress evolves over time, how phenology transitions respond to environmental
+forcing, and how these processes interact under the governing constraints of water balance
+and plant physiology.
+1.2 Research Direction
+AgroEarthFM merges two research directions that have traditionally been treated
+separately. Direction A involves drought modeling, where remote sensing and climate data
+are used to detect, monitor, and forecast drought conditions, typically through indices such
+as SPI, SPEI, VHI, and soil moisture anomalies. These approaches focus on the climate-
+hydrology-vegetation chain but rarely model crop-specific phenology or yield implications.
+Direction B involves crop phenology modeling, where time-series of vegetation indices are
+used to detect phenological transitions (green-up, heading, maturity, senescence) and
+predict crop development. These approaches focus on crop-specific temporal patterns but
+rarely incorporate drought dynamics as a process driver. AgroEarthFM unifies these
+directions by learning a shared multimodal temporal representation that captures both
+
+--- PAGE 8 ---
+AgroEarthFM — Complete Finalized Specification
+2
+drought stress evolution and crop phenology dynamics as interacting processes,
+constrained by physical laws and structured by causal relationships.
+1.3 Long-Term Vision (Phase 2 and Beyond)
+The long-term vision (24-month horizon) extends AgroEarthFM to include: full neural
+causal discovery with validated counterfactual reasoning, food-security risk assessment
+requiring socioeconomic vulnerability and exposure data, global multi-biome
+generalization across diverse agro-climatic zones, integration with process-based crop
+simulation models (DSSAT/APSIM/AquaCrop) for hybrid physics-data modeling, and
+operational decision-support deployment for agricultural resilience planning. These are
+explicitly deferred from the first-year MVRC and will be pursued only after the core
+scientific contribution is validated.
+2. Revised Core Hypothesis
+2.1 Final Revised Hypothesis
+A multimodal temporal representation trained on joint drought and crop-phenology process
+objectives, and regularized by weak water-balance constraints, will improve crop-stress
+detection, phenology forecasting, and yield-risk prediction under out-of-region, out-of-year,
+and extreme-event validation compared with single-domain, non-physics, and conventional
+machine-learning baselines.
+2.2 Hypothesis Rationale
+This hypothesis is structured as a conditional causal claim: IF the model is trained with
+joint process objectives AND regularized by weak physics constraints, THEN it will
+outperform baselines on specific evaluation settings. The "weak" qualifier on physics
+constraints is essential — the water-balance constraint is incomplete (missing irrigation,
+groundwater, management), and the plant-growth constraint is approximate (Mitscherlich-
+Baule is a simplified growth response). The hypothesis claims that even incomplete
+physics, applied as soft regularization with uncertainty weighting, provides measurable
+benefit over unconstrained models.
+2.3 Hypothesis Scope Boundary
+The hypothesis does NOT claim: full causal discovery from observational data alone; food-
+security risk prediction (requires socioeconomic data not included); global generalization
+across all climate zones; decision-grade counterfactual estimates; or field-level yield
+accuracy from administrative-level yield labels. These are explicitly excluded from the
+first-year MVRC scope.
+
+--- PAGE 9 ---
+AgroEarthFM — Complete Finalized Specification
+3
+3. Atomic Testable Claims
+3.1 Claim Register
+Claim
+ID
+Claim Validation
+Requirement
+Success Signal Failure Action
+C1 Joint drought +
+phenology modeling
+improves
+representation quality
+Compare joint vs
+drought-only and
+phenology-only models
+Statistically
+meaningful
+improvement (p <
+0.05)
+Reduce model
+complexity;
+inspect task
+conflicts
+C2 Multimodal fusion
+improves performance
+and robustness
+Compare satellite-only,
+weather-only, soil-
+only, and fused models
+Fused model
+improves
+OOD/extreme
+by >=5% relative
+Check alignment,
+missing data,
+attention collapse
+C3 Process-centered SSL
+improves transfer over
+generic SSL
+Compare process SSL
+vs generic
+MAE/contrastive SSL
+Improved transfer,
+fine-tuning
+efficiency, or
+extreme-event recall
+Revert to generic
+SSL; report
+negative finding
+C4 Weak physics
+regularization
+improves consistency
+without harming skill
+Compare with and
+without water-
+balance/growth
+constraints
+>=15% reduction in
+water-balance
+RMSE, <=3% task
+drop
+Reduce physics
+weight; report as
+diagnostic
+C5 Temporal causally
+informed structure
+improves
+interpretability
+Temporal-DAG sign
+checks, invariance
+tests, known-event
+sensitivity
+Correct signs, stable
+invariance,
+plausible scenarios
+Treat as
+interpretability
+only, not
+performance
+claim
+C6 The model performs
+better on difficult
+conditions
+Out-of-region, out-of-
+year, drought-event
+holdouts
+>=10% relative
+improvement in
+event-level F1
+Rebalance
+training, add
+event-focused
+objectives
+3.2 Claim Validation Priority
+Priority Claims Justification
+Must-validate C1, C2, C3 Core novelty of the paper
+Strongly-validate C4, C6 Key differentiators
+Validate-if-
+possible
+C5 High-risk, high-reward; acceptable as
+interpretability contribution
+4. Causal Chain and Temporal DAG
+4.1 The Agro-Ecosystem Process Chain
+The fundamental process chain that AgroEarthFM models is: Climate Forcing →
+Temperature Anomalies → ET Imbalance → Soil Moisture Decline → Vegetation Stress →
+Phenology Disruption → Crop Stress Accumulation → Yield Reduction. This chain
+represents the physical pathway through which drought impacts propagate through the
+
+--- PAGE 10 ---
+AgroEarthFM — Complete Finalized Specification
+4
+agro-ecosystem. Each link in this chain is grounded in established agricultural and
+hydrological science.
+4.2 Original Causal Graph (DEFECTIVE — Contains DAG Cycle)
+The original implementation plan proposed a static causal graph with a bidirectional edge
+between Vegetation Health (VH) and Crop Stage (CS): VH ↔ CS (bidirectional, same
+time step). This violates the Directed Acyclic Graph (DAG) requirement because it creates
+a simultaneous cycle. Blocker Status: RESOLVED — replaced with temporal DAG.
+4.3 Revised Temporal DAG (FINAL)
+The revised causal structure is time-indexed, eliminating same-time-step cycles:
+Weather(t) → ET(t)
+Rainfall(t), ET(t), Soil(t), I_latent(t) → Soil_Moisture(t)
+Soil_Moisture(t), Temperature(t), Crop_Stage(t) →
+Vegetation_Health(t)
+Vegetation_Health(t), AGDD(t), Crop_Calendar → Crop_Stage(t+1)
+Vegetation_Health(t), Crop_Stage(t), Stress_Accumulation(t) →
+Yield_Risk(t+1)
+4.4 DAG Structural Properties
+Property Specification
+Acyclicity No same-time directed cycles; temporal indexing ensures DAG validity
+Edge directionality All edges are temporally forward or same-time with clear causal
+precedence
+VH → CS Forward in time: VH(t) → CS(t+1)
+CS → VH Same time step: CS(t) → VH(t) (crop stage determines stress
+sensitivity)
+I_latent role Latent unobserved water input enters soil moisture equation at time t
+Stress accumulation Cumulative term that accumulates across time steps
+4.5 Key Causal Relationships Explained
+Weather → ET: Temperature and radiation drive evapotranspiration through the Penman-
+Monteith relationship. Higher temperatures increase atmospheric demand for water vapor,
+accelerating ET rates.
+Rainfall + ET + I_latent → Soil Moisture: The water balance determines soil moisture state.
+Rainfall and latent water inputs add water; ET and runoff remove it. The I_latent term
+captures all unobserved water inputs including irrigation, groundwater, and model errors.
+Soil Moisture + Temperature + Crop Stage → Vegetation Health: Vegetation health
+depends on water availability, atmospheric stress, and the crop's development stage which
+
+--- PAGE 11 ---
+AgroEarthFM — Complete Finalized Specification
+5
+determines its stress sensitivity. Crops are most sensitive to drought during flowering and
+grain-filling stages.
+Vegetation Health + AGDD + Crop Calendar → Crop Stage (t+1): Phenology advances
+based on accumulated thermal time and the crop's current health status. Stressed crops may
+experience delayed phenology. The crop calendar provides a prior for expected transition
+timing.
+Vegetation Health + Crop Stage + Stress Accumulation → Yield Risk (t+1): Yield risk
+emerges from the cumulative stress experienced by the crop, weighted by the phenology
+stage at which stress occurred. Stress during reproductive stages has disproportionate yield
+impact.
+Part II: Architecture Specification
+5. Complete Model Architecture
+5.1 MVP Architecture (Final)
+The first implementation uses a staged architecture: Fine Satellite Encoder (ViT-based) →
+Weather/Climate Temporal Encoder → Soil/Static Context Encoder → Crop
+Calendar/Crop Type Embedding → Scale-Aware Fusion Module → Hierarchical Temporal
+Memory Module (5-day + Monthly) → Shared Agro-Ecosystem State Representation →
+Three Output Heads (Crop Stress Detection, Phenology Forecast, Yield Risk/Yield
+Anomaly) → Weak Physics Regularization (Water Balance + Plant Growth) during
+training.
+5.2 Component Specifications
+5.2.1 Fine Satellite Encoder
+Parameter Specification
+Base architecture Vision Transformer (ViT)
+Input Sentinel-2 / HLS multi-spectral imagery (10-30m)
+Patch size 16×16 pixels
+Input bands B2,B3,B4,B8 (10m) + B5,B6,B7,B8A,B11,B12 (20m resampled)
+Temporal input Sequence of 5-day composites
+Positional encoding 2D spatial + temporal encoding
+Approximate parameters 30-50M parameters
+5.2.2 Weather / Climate Temporal Encoder
+Parameter Specification
+
+--- PAGE 12 ---
+AgroEarthFM — Complete Finalized Specification
+6
+Parameter Specification
+Base architecture Temporal Transformer
+Input ERA5 / CHIRPS climate variables at native resolution (~31km /
+~5km)
+Variables Temperature (min/max/mean), precipitation, wind speed, solar
+radiation, humidity
+Temporal resolution Daily aggregated to 5-day windows
+Approximate parameters 10-15M parameters
+5.2.3 Soil / Static Context Encoder
+Parameter Specification
+Base architecture MLP or single GNN if topology available
+Input SoilGrids variables at ~250m resolution
+Variables Clay, sand, organic carbon, pH, CEC, bulk density, soil depth
+Approximate parameters 2-5M parameters
+5.2.4 Crop Calendar / Crop Type Embedding
+Parameter Specification
+Architecture Learned embedding layer
+Input Crop type, planting date, expected harvest date
+Source GEOGLAM crop calendars, crop masks
+Approximate parameters <1M parameters
+5.2.5 Scale-Aware Fusion Module
+Parameter Specification
+Architecture Cross-attention with resolution-aware positional encoding
+Input Token sequences from all encoders
+Mechanism Fine-resolution tokens attend to coarse-resolution context
+Resolution handling Multi-resolution tokens preserved; no forced upsampling to 10m
+Missing modality Modality-present mask + learned missing-modality token
+Approximate parameters 15-25M parameters
+5.2.6 Hierarchical Temporal Memory Module
+Parameter Specification
+Architecture Two-level temporal transformer
+Level 1 Short-term memory: 5-day composite sequence (within-season
+dynamics)
+Level 2 Long-term memory: Monthly aggregated sequence (seasonal
+patterns)
+Approximate parameters 20-30M parameters
+5.2.7 Output Heads
+Head Architecture Output
+Crop Stress Detection MLP with sigmoid output Binary/multi-class stress probability per
+pixel per time step
+
+--- PAGE 13 ---
+AgroEarthFM — Complete Finalized Specification
+7
+Head Architecture Output
+Phenology Forecast MLP with softmax over stages Stage probability + transition timing
+(MAE in days)
+Yield Risk / Yield
+Anomaly
+MLP with Gaussian output Yield anomaly prediction with
+uncertainty
+Note: The Food-Security Risk head is REMOVED from the MVP. Food-security risk
+requires socioeconomic vulnerability, market, storage, and population data not included in
+the first model. This has been reframed as agricultural production risk or yield-shortfall
+risk.
+5.3 Components Deferred from MVP
+Component Status Reason Re-evaluation Condition
+Full spatial topology
+GNN
+Optional
+extension
+Requires robust graph
+construction
+If spatial context encoding
+insufficient
+Full neural causal
+discovery
+Deferred (Phase
+2)
+High validation burden After causal module passes G6
+gate
+Counterfactual
+reasoning module
+Deferred or
+limited demo
+Requires validated
+temporal-DAG + physics
+After C5 validated and physics
+stable
+Food-security
+output head
+Removed from
+MVP
+Requires socioeconomic
+data
+If socioeconomic data pipeline
+built in Phase 2
+Resilience score
+head
+Deferred Requires validated stress +
+recovery modeling
+After crop-stress detection is
+robust
+DSSAT/APSIM
+integration
+Optional case-
+study baseline
+Requires detailed
+management data
+If process-model comparison
+essential
+5.4 Model Size and Token Budget
+Component Estimated Parameters Token Budget
+Satellite Encoder (ViT) 30-50M ~256 tokens per time step
+Weather Encoder 10-15M ~1-4 tokens per time step
+Soil Encoder 2-5M ~1-4 tokens per time step
+Crop Calendar Embedding <1M ~1 token per time step
+Fusion Module 15-25M Cross-attention: fine queries, all
+keys/values
+Temporal Memory 20-30M 5-day: ~24 tokens; Monthly: ~6 tokens
+Output Heads 2-5M Per-head MLP
+Total MVP ~80-130M ~280-290 tokens per time step
+6. Missing Modality Protocol
+6.1 Design
+The model must support missing or unavailable inputs during both training and inference.
+For each modality: (1) Add a modality-present mask (binary indicator per sample per
+modality). (2) Add a learned missing-modality token that replaces absent modality tokens.
+
+--- PAGE 14 ---
+AgroEarthFM — Complete Finalized Specification
+8
+(3) Use modality dropout during training (randomly zero out entire modalities with
+probability p=0.1-0.2). (4) Report performance under missing-modality scenarios.
+6.2 Missing-Modality Test Matrix
+Test Description Acceptance Criterion
+Full modality All inputs available Baseline performance
+No soil moisture Remove SMAP/ESA CCI <5% relative drop in primary metrics
+No irrigation proxy Remove irrigation-related features Documented performance impact
+No SAR (if
+included)
+Test optical-only fallback <10% relative drop
+Cloud-degraded
+optical
+Simulate missing optical observations Graceful degradation, not
+catastrophic failure
+Weather-only No satellite imagery Documented baseline for zero-optical
+scenarios
+Part III: Data Strategy
+7. Multi-Resolution Datacube Design
+7.1 Core Principle
+The model does NOT force all data to a common 10m grid. Each variable is represented at
+its appropriate spatial and temporal scale. The fusion module is designed to handle multi-
+resolution inputs natively. The original plan's approach of resampling all data to 10m
+Sentinel-2 resolution creates visually detailed but physically false precision. ERA5, SMAP,
+GRACE, groundwater, administrative yield, and management data do not support true 10m
+inference.
+7.2 Resolution Tiers
+Tier Spatial
+Scale
+Temporal
+Scale
+Data Types Token Treatment
+Fine 10-30m 5-day
+composites
+S2/HLS reflectance,
+vegetation indices, SAR
+Fine-resolution
+visual/vegetation
+tokens
+Intermediate 100-500m 5-day to
+monthly
+Aggregated vegetation,
+SAR moisture proxies
+Aggregated context
+tokens
+Coarse 1-10km Daily to
+monthly
+ERA5/CHIRPS weather,
+SMAP/ESA CCI soil
+moisture
+Coarse temporal
+weather/moisture
+tokens
+Regional Admin/field
+level
+Seasonal/annual Yield statistics,
+management records, crop
+maps
+Regional context
+tokens
+
+--- PAGE 15 ---
+AgroEarthFM — Complete Finalized Specification
+9
+7.3 Datacube Construction Protocol
+(1) Coregistration: All data within each tier reprojected to common CRS. (2) Temporal
+alignment: All data aligned to 5-day composite windows. (3) Cloud handling: 5-day
+composites use median compositing with valid-pixel filtering. (4) No cross-tier resampling:
+Fine-tier data NOT upsampled from coarse-tier; coarse-tier NOT forced to 10m. (5)
+Metadata preservation: Each variable retains native resolution, uncertainty estimate, and
+source metadata.
+8. Complete Data Source Catalog
+8.1 Satellite Imagery
+Source Product Resolution Bands Access License
+Sentinel-2 L2A reflectance 10-20m B2-B12, B8A GEE /
+Copernicus Hub
+CC-BY-SA
+4.0
+HLS HLSL30/HLSS30 30m Visual + NIR +
+SWIR
+LP DAAC / GEE Public domain
+Landsat 8/9 L2 reflectance 30m Multi-spectral USGS / GEE Public domain
+8.2 Vegetation Indices
+Index Formula Purpose Derivation
+NDVI (B8 - B4) / (B8 + B4) Green vegetation
+density
+From S2 reflectance
+EVI 2.5 × (B8 - B4) / (B8 + 6×B4
+- 7.5×B2 + 1)
+Corrected vegetation
+density
+From S2 reflectance
+NDWI (B8 - B11) / (B8 + B11) Vegetation water
+content
+From S2 reflectance
+LAI PROSAIL inversion or
+empirical
+Leaf area index From S2 reflectance
+FAPAR PROSAIL inversion or
+empirical
+Absorbed PAR From S2 reflectance
+NDMI (B8 - B11) / (B8 + B11) Normalized difference
+moisture
+From S2 reflectance
+Note: Phenology transitions derived from vegetation-index derivatives are noisy pseudo-
+labels. The plan explicitly acknowledges this and estimates label noise rather than treating
+them as ground truth.
+8.3 Climate Data
+Source Variables Spatial
+Resolution
+Temporal Access License
+ERA5 T_min, T_max,
+T_mean, P, wind, RH,
+solar, ET0
+~31km Hourly→daily→5-
+day
+CDS API / GEE CC-BY-
+4.0
+
+--- PAGE 16 ---
+AgroEarthFM — Complete Finalized Specification
+10
+Source Variables Spatial
+Resolution
+Temporal Access License
+CHIRPS Precipitation ~5km Daily CHIRPS API /
+GEE
+Public
+domain
+ERA5-
+Land
+Enhanced land
+variables
+~9km Hourly CDS API CC-BY-
+4.0
+8.4 Soil Data
+Source Variables Resolution Type Access
+SoilGrids 250m Clay%, Sand%, Organic C, pH,
+CEC, Bulk density, Depth
+~250m Static ISRIC / GEE
+ISRIC Soil taxonomy, water holding
+capacity
+Variable Static ISRIC
+8.5 Soil Moisture
+Source Product Resolution Depth Access
+SMAP L3 Enhanced ~9km (3km
+enhanced)
+0-5cm NASA DAAC / GEE
+ESA CCI Active + Passive
+merged
+~25km 0-5cm ESA CCI / GEE
+Critical note: Soil moisture products provide coarse-resolution surface (0-5cm) estimates.
+They represent large-area moisture conditions, not field-scale root-zone soil moisture.
+They should be treated as coarse context, not fine-grained truth.
+8.6 Groundwater
+Source Product Resolution Access
+GRACE/GRACE-FO Liquid water equivalent
+thickness
+~150-300km NASA JPL / GEE
+Optional regional context only. Resolution is far too coarse for field-scale modeling. Used
+only as a regional drought indicator if included at all.
+8.7 Crop Calendar and Crop Mask
+Source Variables Resolution Access
+GEOGLAM Crop
+Calendar
+Planting/harvest dates by
+crop and region
+Regional/country GEOGLAM / USDA
+ESA WorldCereal Crop type maps 10m ESA
+CDL (US) Crop type 30m USDA NASS
+ISRO Crop Maps
+(India)
+Crop type, kharif/rabi State/district Government of India /
+ISRO
+Crop mask errors: Crop-type maps contain errors and should be treated as noisy labels. Use
+confidence filtering and crop-mask uncertainty. Sensitivity testing with high-confidence
+crop pixels only is required.
+
+--- PAGE 17 ---
+AgroEarthFM — Complete Finalized Specification
+11
+8.8 Yield Labels
+Source Scale Access Quality
+USDA NASS (US) County-level Public High quality, annually updated
+ICRISAT (India) District-level Public Good quality, historical series
+FAOSTAT Country-level Public Coarse, cross-country comparison
+Field-level surveys Field-level Varies Rare but valuable when available
+Scale mismatch rule: If yield is available only at district/county level, field-level
+predictions must be aggregated to the label scale before validation. Never claim field-level
+yield accuracy from administrative-level labels.
+8.9 Irrigation and Management Proxies
+Source Data Type Resolution Access
+GMIA (FAO) Irrigated area fraction ~10km FAO
+IWMI Global Irrigation
+Map
+Irrigated/rainfed
+classification
+~500m IWMI
+ESA WorldCereal Irrigation classification 10m ESA
+Census data Irrigated area by district Admin level Government statistical
+offices
+Critical decision: Direct irrigation data is unreliable at fine spatial scales. The model uses
+I_latent (latent residual water-input inference term) rather than attempting to directly detect
+irrigation. Irrigation maps are used only as validation references for I_latent, not as direct
+inputs.
+9. Scope-Lock Specifications
+9.1 Crop Selection
+Crop Justification
+Wheat Globally important cereal; well-studied phenology; extensive data; drought-sensitive
+during reproductive stages; major crop in IGP and Mediterranean regions
+Maize Highest global production cereal; strong phenology signal from satellite; drought-
+sensitive during silking/grain-fill; major crop in US Corn Belt; contrasting growing
+season to wheat
+Rationale for two crops: Two crops provide sufficient diversity for testing cross-crop
+transfer (Claim C2) while remaining tractable. Wheat and maize have well-characterized
+phenology, extensive ground-truth data, contrasting stress sensitivities, and grow in
+different seasons/regions.
+9.2 Study Region Selection
+Region Climate Primary Crop Data Justification
+
+--- PAGE 18 ---
+AgroEarthFM — Complete Finalized Specification
+12
+Region Climate Primary Crop Data Justification
+Indo-Gangetic Plain
+(Punjab/Haryana,
+India)
+Subtropical
+monsoon; irrigated
++ rainfed
+Wheat (rabi) ICRISAT district yield; ISRO crop
+maps; drought events
+2002/2009/2014/2022; high cloud-
+free density in rabi; irrigation/rainfed
+contrast
+US Corn Belt
+(Iowa/Illinois)
+Temperate
+continental;
+predominantly
+rainfed
+Maize USDA NASS county yield; CDL
+30m crop maps; extensive weather
+stations; drought 2012/2023; low
+cloud contamination
+Iberian Peninsula
+(Castilla-y-
+León/Andalucía,
+Spain)
+Mediterranean;
+water-limited;
+drought-prone
+Wheat Eurostat/CAP yield; ESA
+WorldCereal; severe drought
+2017/2019/2022-23;
+irrigation/rainfed contrast; tests
+water-limited conditions
+9.3 Region Selection Criteria Verification
+Criterion IGP US Corn Belt Iberian Peninsula
+Crop map available Yes (ISRO/Gov India) Yes (CDL 30m) Yes (ESA
+WorldCereal)
+Sufficient cloud-free
+observations
+Yes (rabi season) Yes (summer) Yes (spring)
+Weather data for all
+years
+Yes (ERA5/CHIRPS) Yes (ERA5/NOAA) Yes (ERA5)
+Yield labels available Yes (ICRISAT district) Yes (USDA NASS
+county)
+Yes (Eurostat/CAP)
+Known drought events 2002, 2009, 2014, 2022 2012, 2023 2017, 2019, 2022-23
+Irrigation information Yes (GMIA/IWMI) Yes (USDA FRIS) Yes (GMIA/IWMI)
+5+ years of data Yes (2017-2023) Yes (2017-2023) Yes (2017-2023)
+9.4 Temporal Coverage
+Parameter Specification
+Study period 2017-2023 (7 years)
+Rationale Post-S2A/B launch; captures multiple drought events; overlaps with
+HLS and SMAP availability
+Growing seasons covered ~7 seasons per crop per region
+Temporal resolution 5-day composites within growing season; monthly outside
+Total time steps per season ~24 five-day composites (120 days) for in-season modeling
+9.5 Train / Validation / Test Split Protocol
+Split Method Purpose Data Fraction
+Train Random within-region,
+specific years
+Model fitting ~60% of years (2017-
+2020)
+Validation Out-of-year within-region Hyperparameter selection,
+early stopping
+~20% of years (2021)
+
+--- PAGE 19 ---
+AgroEarthFM — Complete Finalized Specification
+13
+Split Method Purpose Data Fraction
+Test-In-Region Out-of-year, different from
+validation
+Final in-region performance ~20% of years (2022)
+Test-Out-
+Region
+Entire held-out region Spatial transfer evaluation 1 region held out
+Test-Extreme Drought year holdout Extreme-event robustness Specific drought years
+Test-Early-
+Season
+Partial season observations
+only
+No-leakage forecasting Early-season subsets
+Split locking rule: All splits must be defined BEFORE model selection and training begins
+to prevent data leakage. Region/year/event splits are fixed and committed to version
+control.
+No-leakage protocol: Future satellite observations beyond forecast date are PROHIBITED.
+Full-season composites in early-season predictions are PROHIBITED. Yield labels from
+the target prediction period are PROHIBITED. Gap-filled products using future
+observations are PROHIBITED unless explicitly documented. Region-level normalization
+using held-out region statistics is PROHIBITED. All preprocessing must be fit only on
+training data.
+9.6 Label Sources and Scales
+Region Crop Label Source Scale Variables
+IGP (India) Wheat ICRISAT VDSA District-level Yield (t/ha)
+US Corn Belt Maize USDA NASS Quick
+Stats
+County-level Yield (bu/acre → t/ha)
+Iberian Peninsula Wheat Eurostat/CAP NUTS2/Province Yield (t/ha)
+Phenology pseudo-labels: Derived from NDVI/EVI time-series derivatives. These are
+noisy estimates, not ground truth. Crop stress labels: Defined as vegetation health
+anomalies below threshold (NDVI anomaly < -1σ or VHI < 35). Scale compliance rule:
+Predictions validated ONLY at the spatial scale of ground truth labels.
+10. Data Processing Pipeline
+10.1 Pipeline Stages
+(1) Download and Archive: Raw data download from APIs with version control. (2)
+Coregistration: Reproject to common CRS per region. (3) Cloud/Quality Filtering: Apply
+SCL for S2, CFMask for Landsat; threshold <20% cloud in 5-day composite. (4) 5-day
+Compositing: Median composite within windows; valid-pixel count recorded. (5) Index
+Computation: NDVI, EVI, NDWI, LAI, FAPAR computed. (6) Temporal Alignment: All
+sources aligned to common 5-day time axis. (7) Multi-Resolution Stacking: Data organized
+by resolution tier. (8) Quality Flag Generation: Per-pixel per-time-step quality flags. (9)
+
+--- PAGE 20 ---
+AgroEarthFM — Complete Finalized Specification
+14
+Normalization: Per-variable normalization using training-period statistics only. (10) Split
+Assignment: Each pixel-time-step assigned to train/val/test.
+10.2 Cloud Contamination Protocol
+Scenario Strategy
+<20% cloud in 5-day composite Use optical data directly
+20-80% cloud Flag as partially cloud-contaminated; use with quality weight
+>80% cloud Fall back to SAR/HLS/monthly composite; flag as gap-filled
+Persistent cloud (>3 consecutive
+composites)
+Use monthly aggregation; report as cloud-gap event
+Tropical/monsoon chronic cloud Use SAR as primary; optical as secondary
+11. Storage and Compute Estimates
+11.1 Storage Estimates
+Data Category Per Region (7 years) 3 Regions Total
+Sentinel-2 L2A ~2 TB ~6 TB
+HLS ~500 GB ~1.5 TB
+ERA5 climate ~50 GB ~150 GB
+CHIRPS precipitation ~10 GB ~30 GB
+SoilGrids (static) ~20 GB ~60 GB
+SMAP soil moisture ~30 GB ~90 GB
+Crop masks/calendars ~5 GB ~15 GB
+Yield labels and auxiliary ~1 GB ~3 GB
+Processed datacubes ~1 TB ~3 TB
+Total ~3.6 TB ~10.8 TB
+11.2 Compute Estimates
+Task Estimated GPU-Hours Hardware
+Datacube preprocessing 200-500 CPU-hours Multi-core CPU
+Baseline training
+(RF/XGBoost)
+50-100 CPU-hours CPU
+Baseline training
+(LSTM/TCN)
+100-300 GPU-hours 1×A100
+SSL pretraining
+(MAE/future)
+1,000-3,000 GPU-hours 4-8×A100
+Full model training 3,000-8,000 GPU-hours 8×A100
+Physics experiments 500-1,000 GPU-hours 4-8×A100
+Ablation experiments 1,000-2,000 GPU-hours 4-8×A100
+Transfer/robustness eval 500-1,000 GPU-hours 4-8×A100
+Total estimated 6,000-15,000 GPU-hours 8×A100 (80GB)
+
+--- PAGE 21 ---
+AgroEarthFM — Complete Finalized Specification
+15
+11.3 Reproducibility Requirements
+Requirement Specification
+Random seeds Fixed seeds for all experiments; logged in config files
+Software versions PyTorch, TorchGeo, xarray, rasterio versions frozen
+Data download scripts Version-controlled scripts with product IDs and dates
+Train/val/test split files Committed BEFORE any model training
+Model config files YAML/JSON for every experiment
+Experiment tracking Weights & Biases or MLflow for all runs
+Preprocessing pipeline Fit on training data only; saved transformers applied to val/test
+Part IV: Self-Supervised Learning
+12. SSL Objective Specifications
+12.1 SSL Objective Sequence
+Stage Objective
+ID
+Objective Purpose Activation
+SSL-1 L_ssl_1 Masked Spatiotemporal
+Reconstruction
+Learn basic EO
+representations
+Phase 1 (Warm-up)
+SSL-2 L_ssl_2 Cross-Modal Masked
+Prediction
+Learn weather-soil-
+vegetation relationships
+Phase 2 (Fusion)
+SSL-3 L_ssl_3 Future Vegetation
+Trajectory Prediction
+Learn temporal
+ecosystem dynamics
+Phase 2-3
+SSL-4 L_ssl_4 Phenology Pseudo-
+Transition Prediction
+Learn crop-stage timing Phase 3 (Process)
+SSL-5 L_ssl_5 Drought Stress
+Trajectory Prediction
+Learn drought response
+dynamics
+Phase 3 (Process)
+Scenario-
+1
+L_scenario Physics-Constrained
+Scenario Augmentation
+Scenario consistency
+regularization
+Phase 5 (Post-
+physics)
+12.2 Detailed Objective Descriptions
+SSL-1: Masked Spatiotemporal Reconstruction
+Objective: Randomly mask patches in satellite imagery (both spatially and temporally) and
+train the model to reconstruct the masked regions. Masking strategy: 75% spatial patches
+masked per time step (following MAE), 20% of time steps fully masked, combined
+random spatial-temporal masking with varying ratios. Loss: L1 reconstruction loss on
+masked patches only. Rationale: This foundational SSL objective learns spatial and
+temporal structure in satellite imagery. High masking ratio forces meaningful
+representations rather than simple interpolation.
+SSL-2: Cross-Modal Masked Prediction
+
+--- PAGE 22 ---
+AgroEarthFM — Complete Finalized Specification
+16
+Objective: Mask one modality and predict it from remaining modalities. Implementation
+includes Weather → Satellite prediction (predict NDVI/EVI from weather + soil + crop
+calendar), Satellite → Weather prediction, and Soil → Vegetation prediction. Loss: L2
+prediction loss on masked modality tokens. Rationale: Cross-modal prediction forces the
+model to learn relationships between climate forcing, soil conditions, and vegetation
+response, directly aligned with learning the causal process chain.
+SSL-3: Future Vegetation Trajectory Prediction
+Objective: Given vegetation state up to time t, predict the vegetation trajectory from t+1 to
+t+K (K=3-6 five-day steps ahead). Input: Satellite + weather + soil up to time t. Target:
+NDVI/EVI values for t+1 through t+K. Loss: Weighted L2 trajectory loss with increasing
+weight for near-future predictions. Rationale: Teaches temporal dynamics — the model
+must understand how vegetation evolves under current conditions to predict its future
+trajectory, essential for drought forecasting and phenology prediction.
+SSL-4: Phenology Pseudo-Transition Prediction
+Objective: Predict whether a phenology transition will occur within the next K time steps,
+and identify the transition type. Target: Phenology transition labels derived from
+NDVI/EVI derivative analysis (green-up onset, peak, senescence onset, etc.). Label quality:
+These are pseudo-labels, NOT ground truth. Loss: Cross-entropy for transition
+classification + regression for timing. Rationale: Directly teaches the model to recognize
+and predict phenology transitions, the key temporal events in the crop development cycle.
+SSL-5: Drought Stress Trajectory Prediction
+Objective: Given current multimodal state, predict the drought stress trajectory
+(VHI/NDVI anomaly evolution) over the next K time steps. Target: Drought index values
+for t+1 through t+K. Loss: L2 trajectory loss + classification loss for drought onset/severity.
+Rationale: Teaches the model to understand drought evolution dynamics, the core drought-
+modeling capability.
+Scenario-1: Physics-Constrained Scenario Augmentation (NOT strict SSL)
+Objective: Apply synthetic perturbations (e.g., reduce rainfall by 30%, increase
+temperature by 2°C) and enforce that the model's predicted response is physically
+consistent. Status: Reclassified from Counterfactual SSL because synthetic interventions
+encode designer assumptions, not real-world counterfactual behavior. It is a consistency
+regularization technique. Activation: Only after physics regularization is stable (Phase 5).
+Rationale: Enforces that the model's representations respond to environmental
+perturbations in a physically plausible manner.
+13. Loss Function Specification
+
+--- PAGE 23 ---
+AgroEarthFM — Complete Finalized Specification
+17
+13.1 Total Training Loss
+L_total = Σ_i α_i × L_SSL_i
++ λ_water(t) × L_water
++ λ_growth(t) × L_growth
++ λ_causal(t) × L_temporal_DAG
++ λ_calib × L_calibration
+13.2 SSL Objective Weight Ranges
+Weight Initial
+Value
+Range Schedule
+α_1 (Reconstruction) 1.0 0.5-2.0 High initially, decrease as other objectives
+activate
+α_2 (Cross-Modal) 0.5 0.3-1.0 Start at 0, ramp to 0.5 in Phase 2
+α_3 (Future Trajectory) 0.8 0.5-1.5 Start at 0, ramp to 0.8 in Phase 2-3
+α_4 (Phenology) 0.5 0.3-1.0 Start at 0, ramp to 0.5 in Phase 3
+α_5 (Drought) 0.5 0.3-1.0 Start at 0, ramp to 0.5 in Phase 3
+13.3 Physics Loss Weight Warm-up Schedules
+Weight Warm-up Period Start Value Target
+Value
+Schedule
+λ_water(t) 5 epochs 0.0 0.1 Linear warm-up
+λ_growth(t) 5 epochs (after
+λ_water)
+0.0 0.05 Linear warm-up
+λ_causal(t) 5 epochs (after
+λ_growth)
+0.0 0.05 Linear warm-up
+λ_calib No warm-up 0.01 0.01 Constant
+13.4 Training Phase Schedule
+Phase Duration
+(approx.)
+Active Losses Focus
+Warm-up Epochs 1-20 L_ssl_1 (reconstruction) Learn basic EO representations
+Fusion Epochs 21-50 L_ssl_1 + L_ssl_2 + L_ssl_3 Learn multimodal and
+temporal relationships
+Process Epochs 51-80 + L_ssl_4 + L_ssl_5 Learn phenology and drought
+dynamics
+Physics Epochs 81-100 + λ_water × L_water + λ_growth
+× L_growth
+Physics regularization
+Causal-
+informed
+Epochs 101-120 + λ_causal × L_temporal_DAG Causal consistency (if gates
+pass)
+13.5 Gradient Monitoring
+Monitor Threshold Action
+
+--- PAGE 24 ---
+AgroEarthFM — Complete Finalized Specification
+18
+Monitor Threshold Action
+Total gradient norm >100 Reduce learning rate
+Per-objective gradient ratio >10:1 between any two Rebalance weights
+Gradient cosine similarity <0 (conflicting) Reduce weight of conflicting objective
+Loss scale divergence Any loss >10× initial Pause that objective; reduce weight
+14. SSL Stability Monitoring
+14.1 Monitored Quantities
+Metric Purpose Collapse Indicator
+Embedding variance Detect dimensional collapse Variance → 0
+Embedding rank Detect rank collapse Rank → 1
+Covariance spectrum Detect spectral collapse Single dominant eigenvalue
+Nearest-neighbor
+diversity
+Detect representation clustering All samples map to same centroid
+Objective-specific val
+losses
+Detect overfitting or divergence Val loss diverges from train
+Gradient norms Detect training instability Exploding or vanishing gradients
+Linear-probe
+performance
+Detect representation quality Probe accuracy does not improve
+14.2 Collapse Response Protocol
+Condition Response
+Embedding variance < threshold Stop training; increase temperature; add noise
+Rank collapse detected Reduce model capacity; add spectral regularization
+Single objective degrades all
+downstream tasks
+Remove or downweight that objective
+Negative transfer between SSL tasks Train single-objective ablations; identify conflicting pair
+SSL provides no benefit over
+supervised
+Revert to supervised; report SSL as negative finding
+Part V: Physics Framework
+15. Water-Balance Constraint
+15.1 Revised Water-Balance Equation
+ΔSM = P + I_latent - ET - R - D + ε
+Symbol Meaning Units Source
+ΔSM Change in soil moisture mm SMAP/ESA CCI (observed)
+P Precipitation mm/5-day ERA5/CHIRPS
+
+--- PAGE 25 ---
+AgroEarthFM — Complete Finalized Specification
+19
+Symbol Meaning Units Source
+I_latent Latent unobserved water
+input
+mm/5-day Inferred by model
+ET Evapotranspiration mm/5-day ERA5 ET0 × crop coefficient
+R Runoff mm/5-day Estimated from rainfall + soil properties
+D Drainage / deep percolation mm/5-day Estimated from soil moisture surplus
+ε Measurement/model residual mm/5-day Remaining unexplained variation
+15.2 I_latent: Latent Residual Water-Input Inference
+I_latent is a model-inferred variable representing all unobserved water inputs that cannot
+be explained by measured precipitation alone. It is NOT "irrigation detection." What
+I_latent may capture: irrigation, groundwater contribution, capillary rise, runoff model
+error, rainfall data error, soil moisture retrieval error, cloud/gap-filling artifacts, and crop-
+rooting-depth effects. Validation: Compare residual anomalies with known irrigation maps,
+canal command areas, and reported irrigation districts where available. Only after
+validation against multiple evidence sources should I_latent be interpreted as irrigation.
+I_latent acceptance criteria: (1) Residual variable improves error analysis. (2) Residual
+variable does NOT degrade transfer performance. (3) Residual anomalies are spatially and
+temporally structured (not random noise). (4) Residual anomalies correlate with known
+irrigation districts where data available.
+15.3 Physics Loss Design
+L_water = w_data × ||ΔSM_pred - (P + I_latent - ET - R - D)||²
+Where w_data is an uncertainty weight that is higher when data quality is good, lower
+when data quality is poor, and zero when data is entirely missing. The model predicts
+ΔSM_pred and I_latent jointly.
+15.4 Scale Considerations for Water Balance
+The water-balance equation is most valid at the scale at which its components are
+measured. At 10m, rainfall, ET, and soil moisture products are too coarse to close the
+water balance reliably. The physics loss should be computed at the coarsest-resolution tier
+(1-10km) or at the natural aggregation scale of the dominant forcing data. Fine-resolution
+predictions are evaluated for task performance but are not directly constrained by pixel-
+level water balance.
+16. Plant-Growth Constraint
+16.1 Growing Degree Days Accumulation
+
+--- PAGE 26 ---
+AgroEarthFM — Complete Finalized Specification
+20
+GDD_t = max(0, T_mean_t - T_base)
+AGDD_t = Σ GDD_τ for τ from planting date to t
+Parameter Wheat Maize
+T_base 0°C 10°C
+T_upper (optional) 30°C 30°C
+Typical AGDD to maturity 1500-2000 °C·day 1200-1800 °C·day
+16.2 Growth Constraint Formulation
+L_growth = w_growth × (
+||predicted_VHI - f(AGDD, water_availability)||²
++ ||predicted_phenology_stage - g(AGDD, stress_accumulation)||²
+)
+Where f(AGDD, water_availability) is a simplified Mitscherlich-Baule growth response
+function, and g(AGDD, stress_accumulation) enforces that phenology cannot advance
+without sufficient accumulated thermal time. Stress accumulation can delay phenology but
+cannot advance it beyond thermal time limits.
+16.3 Plant Growth Validation Metrics
+Metric Purpose Acceptance
+Impossible-state rate Count predictions violating basic physical
+logic
+<1% of predictions
+Phenology-AGDD
+consistency
+Phenology predictions consistent with
+accumulated GDD
+Correlation >0.9
+Stress-under-deficit
+check
+Healthy growth not predicted under severe
+deficit without I_latent
+Flag violations; document
+17. Physics Acceptance Criteria
+The physics-regularized model is accepted ONLY if ALL of the following conditions are
+met: (1) Water-balance residual RMSE decreases by ≥15% relative to the non-physics
+model. (2) Primary task metrics do not degrade by more than 3% relative. (3) Out-of-
+region performance does not degrade with physics. (4) Residuals are interpretable and not
+random noise; they correlate with known irrigation districts where data available.
+Fallback path: If physics fails acceptance criteria, physics will be reported as a diagnostic
+analysis rather than a core model contribution. The paper will document the physics
+experiment as a negative or inconclusive finding.
+Part VI: Causal Framework
+
+--- PAGE 27 ---
+AgroEarthFM — Complete Finalized Specification
+21
+18. Temporal DAG Specification
+18.1 Complete Temporal DAG Equations
+Eq 1: Weather(t) → ET(t)
+Eq 2: Rainfall(t), ET(t), Soil(t), I_latent(t) → Soil_Moisture(t)
+Eq 3: Soil_Moisture(t), Temperature(t), Crop_Stage(t) →
+Vegetation_Health(t)
+Eq 4: Vegetation_Health(t), AGDD(t), Crop_Calendar → Crop_Stage(t+1)
+Eq 5: Vegetation_Health(t), Crop_Stage(t), Stress_Accumulation(t) →
+Yield_Risk(t+1)
+18.2 Edge Strength Learning
+In the first version, the causal graph structure is domain-specified (fixed topology), and
+only edge strengths are learnable. Full neural causal discovery is deferred to Phase 2. Key
+edges with domain-fixed directions and learnable strength coefficients include:
+Weather→ET, Rainfall→SM, ET→SM, I_latent→SM, SM→VH, Temperature→VH,
+Crop_Stage→VH, VH→CS(t+1), AGDD→CS(t+1), VH→YR(t+1), CS→YR(t+1),
+Stress_Acc→YR(t+1).
+18.3 Causal Loss
+L_temporal_DAG = λ_causal(t) × [
+Σ_edges ||predicted_effect - learned_strength × cause||
++ acyclicity_penalty + sign_consistency_penalty
+]
+19. Causal Validation Metrics
+19.1 Causal Validation Tests
+Test Purpose Acceptance Failure Action
+Graph acyclicity Structural validity No directed cycles Redesign temporal DAG
+Directional sign
+checks
+Correct effect
+directions
+>95% correct signs Debug causal layer
+Invariance across
+years
+Stable edge
+strengths
+CV <0.3 for key edges Reduce causal claims
+Invariance across
+regions
+Stable causal
+relationships
+Same sign, similar
+magnitude
+Report region-specific
+behavior
+Extreme event
+behavior
+Capture known
+drought events
+Correct stress signal Inspect I_latent; check data
+Irrigated vs
+rainfed contrast
+I_latent higher in
+irrigated areas
+Significant difference
+(p<0.05)
+Reconsider I_latent
+interpretation
+
+--- PAGE 28 ---
+AgroEarthFM — Complete Finalized Specification
+22
+Test Purpose Acceptance Failure Action
+Scenario
+monotonicity
+Plausible
+intervention
+responses
+>90% monotonic scenarios Document exceptions
+Known-event case
+studies
+Match documented
+events
+Qualitative agreement Document disagreement
+19.2 Causal Terminology Guidelines
+Allowed Terminology Prohibited Terminology (in MVRC)
+Causally informed structure Causal foundation model
+Causally structured scenario analysis Fully causal decision engine
+Temporal DAG-guided representation Proven causal discovery
+Scenario simulation Counterfactual inference
+Causal plausibility checks Validated causal effect estimates
+20. Counterfactual Module Status
+20.1 Phased Counterfactual Plan
+Stage Status Scope Validation
+Requirement
+Year 1 (MVRC) Limited scenario-
+sensitivity tests only
+Apply synthetic
+perturbations; check
+directional responses
+Sign checks,
+monotonicity
+Year 2 (Phase
+2)
+Formal counterfactual
+module
+If temporal-DAG and
+physics pass validation
+Intervention-like
+evidence; natural
+experiment validation
+All Year 1 counterfactual outputs must be labeled as "scenario simulations" unless
+validated using intervention-like evidence. The term "counterfactual inference" is reserved
+for Phase 2 and requires: validated temporal DAG (G6 passed), stable physics constraints
+(G5 passed), at least one natural experiment or quasi-experimental validation, and sign,
+magnitude, and monotonicity checks passed.
+Part VII: Evaluation Framework
+21. Baseline Specifications
+21.1 Required Baselines
+# Baseline Purpose Must-include?
+1 Climatology / Historical
+Mean
+Minimum skill baseline Yes
+2 Persistence Model Temporal forecasting baseline Yes
+
+--- PAGE 29 ---
+AgroEarthFM — Complete Finalized Specification
+23
+# Baseline Purpose Must-include?
+3 GDD Phenology Model Simple crop-physics baseline Yes
+4 SPI/SPEI/VHI Drought
+Index Models
+Drought-monitoring baselines Yes
+5 Random Forest / XGBoost Strong tabular engineered-feature
+baseline
+Yes
+6 LSTM / TCN Deep temporal baseline Yes
+7 Satellite-only Model Tests value of imagery alone Yes
+8 Weather-only Model Tests value of climate data alone Yes
+9 Multimodal No-Physics
+Model
+Tests physics contribution Yes
+10 Multimodal No-Process-
+SSL Model
+Tests process SSL contribution Yes
+11 Existing GeoFM Features Tests value over general EO
+representations
+If feasible
+12 AquaCrop/DSSAT/APSIM Process-model comparison If feasible
+22. Evaluation Split Protocol
+Split
+ID
+Split Type Purpose Data Used
+S1 Random within-
+region
+Basic sanity check Random pixel-level split within training
+years
+S2 Out-of-year Temporal
+generalization
+Year 2022 held out from training
+S3 Out-of-region Spatial transfer One region entirely held out
+S4 Extreme-event
+holdout
+Drought/heat
+robustness
+Documented drought years held out
+S5 Early-season
+prediction
+No-leakage forecasting Only first 40/60/80 days of season
+S6 Irrigated/rainfed
+contrast
+Confounding analysis Split by irrigation status (if available)
+23. Task Metrics and Thresholds
+23.1 Crop Stress Detection
+Metric Description Minimum
+Threshold
+Target
+AUROC Area under ROC curve >0.80 >0.90
+AUPRC Area under PR curve >0.60 >0.80
+Event-level F1 F1 for drought event detection >0.50 >0.70
+Spatial IoU Intersection over Union of stress
+maps
+>0.30 >0.50
+23.2 Phenology Forecasting
+
+--- PAGE 30 ---
+AgroEarthFM — Complete Finalized Specification
+24
+Metric Description Minimum
+Threshold
+Target
+MAE (days) Mean absolute error of transition
+timing
+<10 days <5 days
+Transition F1 F1 for phenology transitions >0.60 >0.80
+Stage accuracy Phenology stage classification
+accuracy
+>0.70 >0.85
+Calibration (ECE) Expected Calibration Error <0.10 <0.05
+23.3 Drought Forecasting
+Metric Description Minimum
+Threshold
+Target
+RMSE (drought
+index)
+RMSE of predicted drought index <0.5 (standardized) <0.3
+Onset F1 F1 for drought onset detection >0.50 >0.70
+Lead-time skill
+score
+Skill vs climatology at various
+leads
+Positive at 20-day
+lead
+Positive at 40-day
+lead
+23.4 Yield-Risk Prediction
+Metric Description Minimum
+Threshold
+Target
+RMSE (yield) Root mean square error <15% of mean yield <10%
+MAE (yield) Mean absolute error <12% of mean yield <8%
+R² Coefficient of determination >0.50 >0.70
+AUC (below-
+threshold risk)
+AUC for yield below threshold >0.75 >0.85
+23.5 Representation Quality
+Metric Description Minimum Threshold
+Linear probing
+accuracy
+Frozen representation + linear classifier >supervised-from-scratch baseline
+Fine-tuning efficiency Performance vs. fine-tuning samples Better than random-init at <50%
+data
+Transfer gap Fine-tuning performance difference
+across regions
+Smaller than supervised baseline
+23.6 Physics Consistency
+Metric Description Acceptance Criterion
+Water-balance residual
+RMSE
+Physical consistency measure ≥15% improvement over non-
+physics model
+Impossible-state rate Predictions violating basic physics <1%
+Stress-under-deficit
+check
+Healthy growth under severe deficit
+without I_latent
+<5% violation rate
+
+--- PAGE 31 ---
+AgroEarthFM — Complete Finalized Specification
+25
+23.7 Causal Plausibility
+Metric Description Acceptance Criterion
+Sign correctness Correct directional effects >95% of test cases
+Monotonicity Plausible response to interventions >90% of scenarios
+Invariance (cross-
+year)
+Stable edge strengths CV <0.3 for key edges
+Known-event
+agreement
+Qualitative match with documented
+events
+Documented case studies agree
+23.8 Calibration
+Metric Description Minimum Threshold
+Brier score Probabilistic calibration <0.2 for binary tasks
+ECE Expected Calibration Error <0.10
+Reliability curves Visual calibration check Close to diagonal
+Prediction interval
+coverage
+% of true values within intervals Within 5% of nominal coverage
+Part VIII: Implementation Roadmap
+24. 52-Week MVRC Roadmap
+24.1 Phase Breakdown
+Weeks Phase Output Gate
+1-2 Revision and scope
+lock
+Revised hypothesis, MVRC, study
+regions, tasks, metrics
+G0
+3-8 Data audit and
+datacube prototype
+Multi-resolution datacube for one pilot
+region
+G1
+9-12 Domain and tool
+strengthening
+Agronomy/drought/phenology
+knowledge track completed
+—
+13-18 Baselines Climatology, persistence, XGBoost/RF,
+GDD/SPI/VHI, LSTM/TCN
+G2
+19-26 MVP model Satellite/weather/soil/crop encoders and
+fusion module
+G3
+27-34 Process-centered SSL Future trajectory, phenology, drought
+objectives
+G4
+35-40 Physics regularization Water-balance and growth-loss
+ablations
+G5
+41-45 Transfer and robustness
+testing
+Out-of-region/year/event evaluation —
+46-49 Causal-informed
+diagnostics
+Temporal-DAG
+sign/invariance/scenario tests
+G6
+50-52 Final integration and
+report
+Ablation tables, error analysis,
+manuscript-ready results
+G7
+
+--- PAGE 32 ---
+AgroEarthFM — Complete Finalized Specification
+26
+25. Implementation Gates
+Gate Name Go Condition No-Go Condition
+G0 Scope Lock Final crop/region/year/task/metric/data
+selection is testable and data exists
+No available data for any region-
+crop combination
+G1 Data Readiness At least 2 regions have sufficient data;
+cloud/missingness acceptable
+No reliable labels or severe
+missingness with no fallback
+G2 Baseline
+Performance
+At least one simple baseline beats
+climatology/persistence
+Labels or task definition appear
+invalid
+G3 Multimodal
+Fusion Value
+Fusion improves over best single-
+modality in at least 1 primary task
+Fusion adds no value after
+alignment/missingness fixes
+G4 Process SSL
+Value
+Process SSL improves transfer, fine-
+tuning efficiency, or extreme-event
+performance
+SSL collapses or provides no
+measurable benefit
+G5 Physics Value Physics improves consistency (≥15%
+residual reduction) without major task
+degradation (≤3%)
+Physics worsens both residuals
+and task metrics
+G6 Causal-
+Informed Value
+Temporal-DAG passes sign,
+monotonicity, and invariance checks
+Scenario behavior is unstable or
+contradicts domain knowledge
+G7 Research
+Readiness
+Ablations support at least 1 clear
+contribution; results reproducible
+Results are broad but
+inconclusive
+26. Compute and Reproducibility Plan
+26.1 Compute Budget
+Item Specification
+Hardware 8× NVIDIA A100 (80GB) GPU node
+Minimum access period 3 months of active training
+Estimated total GPU-hours 6,000-15,000 GPU-hours
+Data storage ~11 TB for 3 regions
+Estimated cloud cost $15,000-40,000 (AWS p4d.24xl equivalent)
+Part IX: Risk and Mitigation
+27. Risk Register
+# Risk Severity Mitigation Fallback
+R1 Overbroad scope High MVRC defined for 52
+weeks
+Narrow scope further
+R2 False 10m precision High Multi-resolution datacube Aggregate to coarser scale
+R3 Weak ground truth High Select regions by label
+availability
+Use proxy labels with
+documented uncertainty
+R4 Causal overclaiming High Temporal DAG; invariance
+tests; cautious terminology
+Treat as interpretability only
+
+--- PAGE 33 ---
+AgroEarthFM — Complete Finalized Specification
+27
+# Risk Severity Mitigation Fallback
+R5 Missing irrigation data High I_latent latent residual
+strategy
+Treat irrigation as
+documented confounder
+R6 Physics loss
+misspecification
+Med-
+High
+Uncertainty-weighted soft
+constraints
+Report physics as diagnostic
+only
+R7 Compute/storage
+underestimation
+Med-
+High
+Define compute budget
+before architecture lock
+Reduce model size; fewer
+ablations
+R8 Multimodal alignment
+errors
+Med-
+High
+Strict data QA and visual
+checks
+Reduce number of
+modalities in MVP
+R9 Too many SSL
+objectives
+Medium Add objectives sequentially Train objectives separately
+R10 Food-security
+overreach
+Medium Reframed as agricultural
+production risk
+Remove food-security
+claims entirely
+R11 SSL collapse Medium Embedding variance/rank
+monitoring
+Restart with adjusted
+hyperparameters
+R12 Negative transfer
+between SSL tasks
+Medium Single-objective ablations Remove harmful objective
+R13 Cloud contamination
+in tropical regions
+Medium SAR fallback; monthly
+composites
+Exclude worst-affected
+regions/seasons
+R14 Temporal lag
+ambiguity
+Medium Lag-window ablations Select lag by validation
+performance
+R15 Crop-mask noise Medium Confidence filtering;
+sensitivity testing
+Use high-confidence pixels
+only
+R16 Yield-label scale
+mismatch
+Medium Aggregate predictions to
+label scale
+Validate only at label scale
+R17 Calibration missing Medium ECE, Brier score, reliability
+curves
+Add calibration post-hoc
+R18 Domain knowledge
+gap
+Medium Structured reading track
+(Weeks 9-12)
+Consult domain experts
+28. Fallback Paths Summary
+Scenario Fallback Action
+Physics harms task performance Report physics as diagnostic; claim only task performance
+Causal module fails sign/monotonicity
+checks
+Treat as interpretability tool; remove causal claims
+SSL provides no benefit over
+supervised
+Report supervised results; document SSL as negative finding
+Fusion adds no value over single
+modality
+Report single-modality results; analyze failure mode
+I_latent is uninterpretable Remove I_latent; treat irrigation as documented confounder
+Multi-resolution fusion too complex Fall back to moderate-resolution (250m-1km) single-grid
+approach
+Drought events insufficient in data Extend temporal window; include earlier Landsat-era data
+Compute budget exceeded Reduce model size; fewer ablations; single-region study
+29. Ethical and Communication Constraints
+
+--- PAGE 34 ---
+AgroEarthFM — Complete Finalized Specification
+28
+29.1 Allowed Language
+Agricultural production-risk prototype. Crop-stress monitoring model. Yield-shortfall risk
+estimator. Causally informed scenario analysis. Multimodal representation learning
+framework.
+29.2 Prohibited Language (in MVRC/Year 1)
+Food-security crisis prediction. Fully causal decision engine. Guaranteed climate
+adaptation recommendation. Field-level yield truth (if labels are administrative).
+Operational decision-support system. Validated counterfactual inference.
+29.3 Required Disclaimers
+All maps and risk outputs must include: uncertainty estimates (prediction intervals or
+calibrated probabilities), caveats about spatial scale limitations, statement that the model is
+a research prototype not an operational system, and acknowledgment of data limitations
+(cloud gaps, coarse resolution, missing irrigation).
+Part X: Validation History and Corrections
+30. Blocker Resolutions (All Resolved)
+30.1 B1: DAG Cycle — RESOLVED
+Original problem: Bidirectional edge VH ↔ CS at same time step violated DAG
+acyclicity. Resolution: Temporal DAG with VH(t) → CS(t+1) and CS(t) → VH(t) (no
+same-time bidirectionality). Validation: Check graph acyclicity after temporal unrolling.
+Fallback: Remove causal module from MVRC; keep interpretability only.
+30.2 B2: Timeline Realism — RESOLVED
+Original problem: 52 weeks insufficient for full plan; realistic timeline 70-80 weeks.
+Resolution: Define MVRC for 52 weeks; full plan as 24-month vision. Validation:
+Milestone review every 8 weeks. Fallback: Convert causal/counterfactual to future work
+section.
+30.3 B3: Irrigation Data Gap — RESOLVED
+Original problem: No reliable global irrigation data at fine scales. Resolution: I_latent —
+latent residual water-input inference term (NOT irrigation detection). Validation: Compare
+residual anomalies with irrigation maps where available. Fallback: Treat irrigation as
+documented confounder/uncertainty source.
+
+--- PAGE 35 ---
+AgroEarthFM — Complete Finalized Specification
+29
+30.4 B4: Food-Security Overreach — RESOLVED
+Original problem: Food-security risk requires socioeconomic data not included in model.
+Resolution: Reframed as agricultural production risk / yield-shortfall risk. Validation: No
+food-security claims without socioeconomic data. Fallback: Add food-security layer only
+in Phase 2 extension.
+31. High-Priority Resolutions (All Resolved)
+H1 (Forced 10m harmonization): Multi-resolution datacube with scale-aware fusion
+adopted. No coarse variables interpreted as true 10m signals. H2 (Loss weighting
+unspecified): Weighted loss with curriculum scheduling; warm-up for physics and causal
+losses. H3 (Process-model baseline absent): Added simple physics baselines (GDD,
+SPI/SPEI/VHI); DSSAT/APSIM if data allow. H4 (Missing modality protocol): Modality
+masks + learned missing-modality tokens + modality dropout. H5 (Tier 3 validation
+undefined): Full metrics defined for physics and causal plausibility.
+32. Medium-Priority Resolutions (All Resolved)
+Issue Resolution
+SSL collapse risk Embedding variance/rank/covariance spectrum monitoring with restart
+protocol
+Negative transfer Single-objective ablations; remove harmful objectives
+Cloud contamination Cloud threshold + SAR/monthly fallback; report valid-observation statistics
+Temporal lag
+ambiguity
+Lag-window ablations; select by validation performance
+Crop-mask noise Confidence filtering; sensitivity testing with high-confidence pixels
+Yield scale mismatch Aggregate predictions to label scale for validation
+Calibration missing ECE, Brier score, reliability curves, prediction interval coverage
+Compute unknown GPU-hour and storage estimates; compute budget locked before training
+Domain knowledge gap Agronomy/drought/phenology reading track in Weeks 9-12
+33. Terminology Corrections
+Original Term Corrected Term Reason
+Causal foundation model Causally informed agro-ecosystem
+foundation prototype
+Avoids overclaiming until causal
+validation is strong
+Food-security risk Agricultural production risk / yield-
+shortfall risk
+Food security requires
+socioeconomic data not in model
+Counterfactual SSL Physics-constrained scenario
+augmentation
+Synthetic interventions are not
+strict SSL
+Global cross-region
+generalization
+Transfer across selected contrasting
+agro-climatic regions
+Makes claim testable within
+available time/data
+
+--- PAGE 36 ---
+AgroEarthFM — Complete Finalized Specification
+30
+Original Term Corrected Term Reason
+Irrigation detection Latent unobserved water-input /
+residual-water anomaly inference
+Residuals are not uniquely
+irrigation
+Counterfactual inference Scenario simulation (Year 1) Until validated with intervention-
+style evidence
+34. Reference Corrections
+Reference Original Correction
+Ref [10] Reichstein et al., 2020 Year should be 2019 (Reichstein et al.,
+Nature, 2019)
+Ref [13] Xiong et al., arXiv:2210.00035 Author should be verified — likely Xia et al.
+Appendices
+Appendix A: Complete Terminology Mapping
+Concept Final Term Context
+The model AgroEarthFM Self-Supervised Multimodal Physics-Informed
+Causal Geo Foundation Model
+First-year scope MVRC Minimum Viable Research Contribution
+Architecture
+approach
+Staged implementation Components added sequentially with gating
+Causal framework Temporal DAG Time-indexed directed acyclic graph
+Physics approach Weak uncertainty-weighted
+regularization
+Not hard constraints; soft penalties
+SSL approach Process-centered Objectives designed around agro-ecosystem
+processes
+Data approach Multi-resolution datacube Variables at native scales; scale-aware fusion
+Irrigation handling I_latent Latent residual water-input inference
+Counterfactual Scenario augmentation Year 1 only; not validated counterfactual
+inference
+Evaluation 3-tier + calibration Representation, downstream, physics/causal,
+calibration
+Output scope Agricultural production risk Not food-security risk
+Appendix B: Complete Variable Catalog
+B.1 Satellite Variables
+Variable Source Resolution Temporal
+B2 (Blue, 490nm) Sentinel-2 L2A 10m 5-day
+B3 (Green, 560nm) Sentinel-2 L2A 10m 5-day
+B4 (Red, 665nm) Sentinel-2 L2A 10m 5-day
+
+--- PAGE 37 ---
+AgroEarthFM — Complete Finalized Specification
+31
+Variable Source Resolution Temporal
+B5 (Red Edge 1, 705nm) Sentinel-2 L2A 20m 5-day
+B6 (Red Edge 2, 740nm) Sentinel-2 L2A 20m 5-day
+B7 (Red Edge 3, 783nm) Sentinel-2 L2A 20m 5-day
+B8 (NIR, 842nm) Sentinel-2 L2A 10m 5-day
+B8A (Narrow NIR, 865nm) Sentinel-2 L2A 20m 5-day
+B11 (SWIR 1, 1610nm) Sentinel-2 L2A 20m 5-day
+B12 (SWIR 2, 2190nm) Sentinel-2 L2A 20m 5-day
+HLS reflectance HLSL30/HLSS30 30m 5-day
+B.2 Climate Variables
+Variable Source Resolution Temporal
+T_min, T_max, T_mean ERA5 ~31km Daily → 5-day
+Total precipitation ERA5/CHIRPS ~31km/~5km Daily → 5-day
+Wind speed (u, v) ERA5 ~31km Daily → 5-day
+Relative humidity ERA5 ~31km Daily → 5-day
+Solar radiation ERA5 ~31km Daily → 5-day
+ET0 (Penman-Monteith) Computed from ERA5 ~31km Daily → 5-day
+B.3 Soil Variables
+Variable Source Resolution Temporal
+Clay content SoilGrids ~250m Static
+Sand content SoilGrids ~250m Static
+Organic carbon SoilGrids ~250m Static
+pH SoilGrids ~250m Static
+CEC SoilGrids ~250m Static
+Bulk density SoilGrids ~250m Static
+Soil depth SoilGrids ~250m Static
+Appendix C: Data License Summary
+Data Source License Access Restriction
+Sentinel-2 CC-BY-SA 4.0 / Copernicus Free, open access
+HLS Public domain (NASA/USGS) Free, open access
+Landsat 8/9 Public domain (USGS) Free, open access
+ERA5 CC-BY-4.0 (Copernicus) Free with registration
+CHIRPS Public domain Free, open access
+SoilGrids CC-BY 4.0 (ISRIC) Free, open access
+SMAP NASA Earthdata Free with registration
+ESA CCI SM CC-BY-SA 4.0 Free, open access
+GRACE NASA JPL Free with registration
+
+--- PAGE 38 ---
+AgroEarthFM — Complete Finalized Specification
+32
+Data Source License Access Restriction
+USDA NASS Public domain (US Gov) Free, open access
+ICRISAT Varies Generally open for research
+Eurostat CC-BY 4.0 Free with attribution
+CDL Public domain (USDA) Free, open access
+ESA WorldCereal ESA license Free for research
+Appendix D: Domain Knowledge Checklist (Weeks 9-12)
+D.1 Agronomy Fundamentals
+Topic Minimum Understanding Required
+Crop phenology stages Wheat: Tillering, Stem Extension, Heading, Flowering, Grain Fill, Maturity;
+Maize: Emergence, V1-VT, Silking R1, Grain Fill R2-R6, Maturity
+GDD / thermal time Accumulated growing degree days; base temperatures; role in phenology
+prediction
+Crop stress
+mechanisms
+Drought, heat, combined stress; stage-specific sensitivity; stress
+accumulation effects
+Yield formation Source-sink relationships; yield components; critical periods for yield
+determination
+D.2 Drought Science
+Topic Minimum Understanding Required
+Drought types Meteorological, agricultural, hydrological, socioeconomic
+Drought indices SPI, SPEI, VHI, PDSI, soil moisture percentiles; calculation and
+interpretation
+Drought propagation Climate → Soil moisture → Vegetation → Crop → Yield; time lags and
+memory effects
+ET and water balance Penman-Monteith ET; FAO crop coefficients; soil water balance components
+D.3 Remote Sensing for Agriculture
+Topic Minimum Understanding Required
+Sentinel-2 for
+agriculture
+Band selection, spectral indices, compositing, cloud masking
+Phenology from
+satellite
+NDVI/EVI time-series analysis; transition detection methods; noise and
+uncertainty
+SAR for agriculture Sentinel-1 backscatter; soil moisture estimation; cloud-penetrating capability
+Data harmonization HLS harmonization approach; cross-sensor calibration; temporal gap-filling
+D.4 Foundation Models and SSL
+Topic Minimum Understanding Required
+Geospatial foundation
+models
+SatMAE, DOFA, PhilEO, TerraFM, Presto, etc.
+
+--- PAGE 39 ---
+AgroEarthFM — Complete Finalized Specification
+33
+Topic Minimum Understanding Required
+SSL methods MAE, SimCLR, DINO, BYOL; masked reconstruction vs. contrastive
+learning
+Multimodal SSL Cross-modal prediction; modality alignment; missing modality handling
+Transfer learning Linear probing, fine-tuning, domain adaptation, OOD evaluation
+Appendix E: Key Equations Summary
+E.1 Water Balance
+ΔSM = P + I_latent - ET - R - D + ε
+E.2 Growing Degree Days
+GDD_t = max(0, T_mean_t - T_base)
+AGDD_t = Σ GDD_τ for τ from planting date to t
+E.3 Total Loss
+L_total = Σ_i α_i × L_SSL_i + λ_water(t) × L_water + λ_growth(t) ×
+L_growth + λ_causal(t) × L_temporal_DAG + λ_calib × L_calibration
+E.4 Physics Loss
+L_water = w_data × ||ΔSM_pred - (P + I_latent - ET - R - D)||²
+E.5 Causal Loss
+L_temporal_DAG = λ_causal(t) × [Σ_edges ||pred_effect - strength ×
+cause|| + acyclicity_penalty + sign_penalty]
+Appendix F: Final Acceptable Claim (If Results Support)
+AgroEarthFM demonstrates that joint drought-phenology process-centered multimodal
+representation learning, augmented with weak physical regularization, improves
+agricultural stress and phenology/yield-risk prediction under selected transfer and extreme-
+event settings compared with strong statistical, temporal, and non-physics baselines.
+Claims NOT Allowed in First-Year Output Unless Separately Validated:
+The system is a fully causal foundation model. The system predicts food-security risk
+directly. The model generalizes globally across all climate regions. The counterfactual
+outputs are decision-grade causal estimates. Field-scale yield accuracy is proven using only
+administrative yield labels.

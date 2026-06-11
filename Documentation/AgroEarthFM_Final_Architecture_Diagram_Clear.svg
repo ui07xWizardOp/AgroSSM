@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1550" viewBox="0 0 2400 1550">
+<defs>
+  <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+    <path d="M2,2 L12,7 L2,12 Z" fill="#475569"/>
+  </marker>
+  <filter id="softShadow" x="-10%" y="-10%" width="120%" height="130%">
+    <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.10"/>
+  </filter>
+  <style>
+    text { font-family: Inter, Segoe UI, Arial, sans-serif; }
+  </style>
+</defs>
+<rect width="2400" height="1550" fill="#f8fafc"/>
+
+<rect x="55" y="35" width="2290" height="105" rx="24" fill="#0f172a" filter="url(#softShadow)"/>
+<text x="1200.0" y="80" font-size="36" font-weight="900" fill="#ffffff" text-anchor="middle">AgroEarthFM — Clean Final Architecture Diagram</text>
+<text x="1200.0" y="116" font-size="20" font-weight="500" fill="#cbd5e1" text-anchor="middle">Year‑1 MVP: multimodal drought–phenology learning with weak physics regularisation and causal-informed diagnostics</text>
+<rect x="45" y="165" width="2310" height="835" rx="28" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+<text x="90" y="202" font-size="18" font-weight="900" fill="#334155" text-anchor="start">MAIN MODEL PIPELINE</text>
+<rect x="45" y="1035" width="2310" height="390" rx="28" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+<text x="90" y="1072" font-size="18" font-weight="900" fill="#334155" text-anchor="start">TRAINING, PHYSICS, CAUSAL DIAGNOSTICS, AND VALIDATION CONTROLS</text>
+<text x="210" y="245" font-size="19" font-weight="900" fill="#0f172a" text-anchor="middle">1. Multi-Resolution Inputs</text>
+<text x="620" y="245" font-size="19" font-weight="900" fill="#0f172a" text-anchor="middle">2. QC Datacube</text>
+<text x="1010" y="245" font-size="19" font-weight="900" fill="#0f172a" text-anchor="middle">3. Encoders</text>
+<text x="1430" y="245" font-size="19" font-weight="900" fill="#0f172a" text-anchor="middle">4. Fusion + Memory</text>
+<text x="1845" y="245" font-size="19" font-weight="900" fill="#0f172a" text-anchor="middle">5. Task Heads</text>
+<text x="2190" y="245" font-size="19" font-weight="900" fill="#0f172a" text-anchor="middle">6. Evaluation</text>
+<rect x="80" y="285" width="300" height="118" rx="18" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="230.0" y="319" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Fine EO / Vegetation</text>
+<text x="104" y="355" font-size="15" font-weight="400" fill="#334155" text-anchor="start">HLS / Sentinel‑2 / Landsat</text>
+<text x="104" y="378" font-size="15" font-weight="400" fill="#334155" text-anchor="start">Optional SAR fallback</text>
+<text x="104" y="401" font-size="15" font-weight="400" fill="#334155" text-anchor="start">NDVI, EVI, NDWI</text>
+<text x="104" y="424" font-size="15" font-weight="400" fill="#334155" text-anchor="start">Native: 10–30 m</text>
+<rect x="80" y="425" width="300" height="118" rx="18" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="230.0" y="459" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Weather / Climate</text>
+<text x="104" y="495" font-size="15" font-weight="400" fill="#334155" text-anchor="start">Rainfall, temperature</text>
+<text x="104" y="518" font-size="15" font-weight="400" fill="#334155" text-anchor="start">humidity, radiation, wind</text>
+<text x="104" y="541" font-size="15" font-weight="400" fill="#334155" text-anchor="start">ERA5 / CHIRPS etc.</text>
+<text x="104" y="564" font-size="15" font-weight="400" fill="#334155" text-anchor="start">Native coarse scale</text>
+<rect x="80" y="565" width="300" height="118" rx="18" fill="#fef3c7" stroke="#d97706" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="230.0" y="599" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Soil / Hydro Context</text>
+<text x="104" y="635" font-size="15" font-weight="400" fill="#334155" text-anchor="start">SoilGrids, SMAP / CCI</text>
+<text x="104" y="658" font-size="15" font-weight="400" fill="#334155" text-anchor="start">soil texture, water capacity</text>
+<text x="104" y="681" font-size="15" font-weight="400" fill="#334155" text-anchor="start">DEM/topography optional</text>
+<text x="104" y="704" font-size="15" font-weight="400" fill="#334155" text-anchor="start">uncertainty retained</text>
+<rect x="80" y="705" width="300" height="118" rx="18" fill="#fce7f3" stroke="#db2777" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="230.0" y="739" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Crop / Management</text>
+<text x="104" y="775" font-size="15" font-weight="400" fill="#334155" text-anchor="start">Crop type and calendar</text>
+<text x="104" y="798" font-size="15" font-weight="400" fill="#334155" text-anchor="start">planting window</text>
+<text x="104" y="821" font-size="15" font-weight="400" fill="#334155" text-anchor="start">crop mask confidence</text>
+<text x="104" y="844" font-size="15" font-weight="400" fill="#334155" text-anchor="start">irrigation proxy if known</text>
+<rect x="80" y="845" width="300" height="118" rx="18" fill="#ede9fe" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="12 8" filter="url(#softShadow)"/>
+<text x="230.0" y="879" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Validation Labels</text>
+<text x="104" y="915" font-size="15" font-weight="400" fill="#334155" text-anchor="start">phenology / stress events</text>
+<text x="104" y="938" font-size="15" font-weight="400" fill="#334155" text-anchor="start">yield or yield anomaly</text>
+<text x="104" y="961" font-size="15" font-weight="400" fill="#334155" text-anchor="start">drought records</text>
+<text x="104" y="984" font-size="15" font-weight="400" fill="#334155" text-anchor="start">validate at label scale</text>
+<line x1="420" y1="330" x2="420" y2="905" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+<line x1="380" y1="344.0" x2="420" y2="344.0" stroke="#94a3b8" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="380" y1="484.0" x2="420" y2="484.0" stroke="#94a3b8" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="380" y1="624.0" x2="420" y2="624.0" stroke="#94a3b8" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="380" y1="764.0" x2="420" y2="764.0" stroke="#94a3b8" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="380" y1="904.0" x2="420" y2="904.0" stroke="#94a3b8" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="500" y="350" width="330" height="500" rx="18" fill="#ffffff" stroke="#64748b" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="665.0" y="384" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Quality-Controlled Multi-Resolution Datacube</text>
+<text x="524" y="420" font-size="16" font-weight="400" fill="#334155" text-anchor="start">No forced 10 m upscaling</text>
+<text x="524" y="444" font-size="16" font-weight="400" fill="#334155" text-anchor="start">Native scale metadata retained</text>
+<text x="524" y="468" font-size="16" font-weight="400" fill="#334155" text-anchor="start">5–10 day EO windows</text>
+<text x="524" y="492" font-size="16" font-weight="400" fill="#334155" text-anchor="start">monthly / seasonal context</text>
+<text x="524" y="516" font-size="16" font-weight="400" fill="#334155" text-anchor="start">cloud and gap masks</text>
+<text x="524" y="540" font-size="16" font-weight="400" fill="#334155" text-anchor="start">crop-mask confidence</text>
+<text x="524" y="564" font-size="16" font-weight="400" fill="#334155" text-anchor="start">modality-present masks</text>
+<text x="524" y="588" font-size="16" font-weight="400" fill="#334155" text-anchor="start">locked train/val/test splits</text>
+<text x="524" y="612" font-size="16" font-weight="400" fill="#334155" text-anchor="start">no-leakage preprocessing</text>
+<line x1="420" y1="615" x2="500" y2="615" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="920" y="300" width="320" height="115" rx="18" fill="#ecfdf5" stroke="#059669" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1080.0" y="334" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">EO Temporal Patch Encoder</text>
+<text x="944" y="370" font-size="15" font-weight="400" fill="#334155" text-anchor="start">compact ViT / CNN‑ViT</text>
+<text x="944" y="393" font-size="15" font-weight="400" fill="#334155" text-anchor="start">spectral + temporal tokens</text>
+<text x="944" y="416" font-size="15" font-weight="400" fill="#334155" text-anchor="start">vegetation trajectory features</text>
+<rect x="920" y="445" width="320" height="115" rx="18" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1080.0" y="479" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Weather Temporal Encoder</text>
+<text x="944" y="515" font-size="15" font-weight="400" fill="#334155" text-anchor="start">Transformer / TCN</text>
+<text x="944" y="538" font-size="15" font-weight="400" fill="#334155" text-anchor="start">lag-aware climate forcing</text>
+<text x="944" y="561" font-size="15" font-weight="400" fill="#334155" text-anchor="start">heat and rainfall stress</text>
+<rect x="920" y="590" width="320" height="115" rx="18" fill="#fffbeb" stroke="#d97706" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1080.0" y="624" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Soil / Static Encoder</text>
+<text x="944" y="660" font-size="15" font-weight="400" fill="#334155" text-anchor="start">MLP or optional shared GNN</text>
+<text x="944" y="683" font-size="15" font-weight="400" fill="#334155" text-anchor="start">soil and hydro-context tokens</text>
+<text x="944" y="706" font-size="15" font-weight="400" fill="#334155" text-anchor="start">no duplicate topology GNN</text>
+<rect x="920" y="735" width="320" height="115" rx="18" fill="#fdf2f8" stroke="#db2777" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1080.0" y="769" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Crop Calendar Encoder</text>
+<text x="944" y="805" font-size="15" font-weight="400" fill="#334155" text-anchor="start">crop type embedding</text>
+<text x="944" y="828" font-size="15" font-weight="400" fill="#334155" text-anchor="start">planting window + crop prior</text>
+<text x="944" y="851" font-size="15" font-weight="400" fill="#334155" text-anchor="start">explicit AGDD accumulator</text>
+<rect x="920" y="880" width="320" height="70" rx="18" fill="#f8fafc" stroke="#475569" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1080.0" y="914" font-size="19" font-weight="800" fill="#0f172a" text-anchor="middle">Missing-Modality Handler</text>
+<text x="944" y="950" font-size="15" font-weight="400" fill="#334155" text-anchor="start">null tokens + modality masks + modality dropout</text>
+<line x1="875" y1="357" x2="875" y2="793" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+<line x1="830" y1="615" x2="875" y2="615" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="875" y1="357.5" x2="920" y2="357.5" stroke="#94a3b8" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="875" y1="502.5" x2="920" y2="502.5" stroke="#94a3b8" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="875" y1="647.5" x2="920" y2="647.5" stroke="#94a3b8" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="875" y1="792.5" x2="920" y2="792.5" stroke="#94a3b8" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="1080" y1="880" x2="1080" y2="850" stroke="#64748b" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="1330" y="320" width="350" height="145" rx="18" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1505.0" y="354" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Scale-Aware Ordered Fusion</text>
+<text x="1354" y="390" font-size="16" font-weight="400" fill="#334155" text-anchor="start">cross-resolution attention or gated fusion</text>
+<text x="1354" y="414" font-size="16" font-weight="400" fill="#334155" text-anchor="start">process order: weather → soil/water</text>
+<text x="1354" y="438" font-size="16" font-weight="400" fill="#334155" text-anchor="start">→ vegetation → phenology</text>
+<rect x="1330" y="535" width="350" height="145" rx="18" fill="#fef9c3" stroke="#ca8a04" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1505.0" y="569" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Hierarchical Temporal Memory</text>
+<text x="1354" y="605" font-size="16" font-weight="400" fill="#334155" text-anchor="start">fine path: 5–10 day dynamics</text>
+<text x="1354" y="629" font-size="16" font-weight="400" fill="#334155" text-anchor="start">coarse path: monthly/seasonal context</text>
+<text x="1354" y="653" font-size="16" font-weight="400" fill="#334155" text-anchor="start">lagged drought and recovery memory</text>
+<rect x="1330" y="760" width="350" height="150" rx="18" fill="#ede9fe" stroke="#7c3aed" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1505.0" y="794" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Shared Agro‑Ecosystem State zₜ</text>
+<text x="1354" y="830" font-size="16" font-weight="400" fill="#334155" text-anchor="start">vegetation health + soil‑water state</text>
+<text x="1354" y="854" font-size="16" font-weight="400" fill="#334155" text-anchor="start">phenology state + stress accumulation</text>
+<text x="1354" y="878" font-size="16" font-weight="400" fill="#334155" text-anchor="start">latent residual‑water anomaly + uncertainty</text>
+<line x1="1285" y1="357" x2="1285" y2="793" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+<line x1="1240" y1="357.5" x2="1285" y2="357.5" stroke="#94a3b8" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="1240" y1="502.5" x2="1285" y2="502.5" stroke="#94a3b8" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="1240" y1="647.5" x2="1285" y2="647.5" stroke="#94a3b8" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="1240" y1="792.5" x2="1285" y2="792.5" stroke="#94a3b8" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="1285" y1="393" x2="1330" y2="393" stroke="#0284c7" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1505.0" y1="465" x2="1505.0" y2="535" stroke="#0284c7" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1505.0" y1="680" x2="1505.0" y2="760" stroke="#ca8a04" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1780" y="285" width="285" height="92" rx="18" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1922.5" y="319" font-size="19" font-weight="800" fill="#0f172a" text-anchor="middle">Crop Stress Head</text>
+<text x="1804" y="355" font-size="15" font-weight="400" fill="#334155" text-anchor="start">water/heat stress score</text>
+<text x="1804" y="378" font-size="15" font-weight="400" fill="#334155" text-anchor="start">probability + uncertainty</text>
+<rect x="1780" y="400" width="285" height="92" rx="18" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1922.5" y="434" font-size="19" font-weight="800" fill="#0f172a" text-anchor="middle">Phenology Forecast Head</text>
+<text x="1804" y="470" font-size="15" font-weight="400" fill="#334155" text-anchor="start">current stage + next transition</text>
+<text x="1804" y="493" font-size="15" font-weight="400" fill="#334155" text-anchor="start">MAE days / transition F1</text>
+<rect x="1780" y="515" width="285" height="92" rx="18" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1922.5" y="549" font-size="19" font-weight="800" fill="#0f172a" text-anchor="middle">Drought Trajectory Head</text>
+<text x="1804" y="585" font-size="15" font-weight="400" fill="#334155" text-anchor="start">onset, intensity, recovery</text>
+<text x="1804" y="608" font-size="15" font-weight="400" fill="#334155" text-anchor="start">lead-time skill</text>
+<rect x="1780" y="630" width="285" height="92" rx="18" fill="#fce7f3" stroke="#db2777" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1922.5" y="664" font-size="19" font-weight="800" fill="#0f172a" text-anchor="middle">Yield‑Risk / Anomaly Head</text>
+<text x="1804" y="700" font-size="15" font-weight="400" fill="#334155" text-anchor="start">production risk only</text>
+<text x="1804" y="723" font-size="15" font-weight="400" fill="#334155" text-anchor="start">validated at label scale</text>
+<rect x="1780" y="745" width="285" height="92" rx="18" fill="#f8fafc" stroke="#475569" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1922.5" y="779" font-size="19" font-weight="800" fill="#0f172a" text-anchor="middle">Residual Water + Uncertainty</text>
+<text x="1804" y="815" font-size="15" font-weight="400" fill="#334155" text-anchor="start">latent unobserved water input</text>
+<text x="1804" y="838" font-size="15" font-weight="400" fill="#334155" text-anchor="start">not automatically irrigation</text>
+<line x1="1735" y1="331" x2="1735" y2="791" stroke="#a78bfa" stroke-width="4" stroke-linecap="round"/>
+<line x1="1680" y1="835" x2="1735" y2="835" stroke="#7c3aed" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 1735 835 L 1735 791" fill="none" stroke="#7c3aed" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="1735" y1="331.0" x2="1780" y2="331.0" stroke="#a78bfa" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="1735" y1="446.0" x2="1780" y2="446.0" stroke="#a78bfa" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="1735" y1="561.0" x2="1780" y2="561.0" stroke="#a78bfa" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="1735" y1="676.0" x2="1780" y2="676.0" stroke="#a78bfa" stroke-width="2.2" marker-end="url(#arrow)"/>
+<line x1="1735" y1="791.0" x2="1780" y2="791.0" stroke="#a78bfa" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="2130" y="360" width="240" height="380" rx="18" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="2250.0" y="394" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Validation Dashboard</text>
+<text x="2154" y="430" font-size="16" font-weight="400" fill="#334155" text-anchor="start">task metrics</text>
+<text x="2154" y="454" font-size="16" font-weight="400" fill="#334155" text-anchor="start">calibration</text>
+<text x="2154" y="478" font-size="16" font-weight="400" fill="#334155" text-anchor="start">physics residuals</text>
+<text x="2154" y="502" font-size="16" font-weight="400" fill="#334155" text-anchor="start">temporal-DAG checks</text>
+<text x="2154" y="526" font-size="16" font-weight="400" fill="#334155" text-anchor="start">OOD region split</text>
+<text x="2154" y="550" font-size="16" font-weight="400" fill="#334155" text-anchor="start">OOD year split</text>
+<text x="2154" y="574" font-size="16" font-weight="400" fill="#334155" text-anchor="start">extreme-event split</text>
+<text x="2154" y="598" font-size="16" font-weight="400" fill="#334155" text-anchor="start">missing-modality tests</text>
+<line x1="2065" y1="331.0" x2="2130" y2="550" stroke="#ea580c" stroke-width="1.9" marker-end="url(#arrow)"/>
+<line x1="2065" y1="446.0" x2="2130" y2="446.0" stroke="#ea580c" stroke-width="1.9" marker-end="url(#arrow)"/>
+<line x1="2065" y1="561.0" x2="2130" y2="561.0" stroke="#ea580c" stroke-width="1.9" marker-end="url(#arrow)"/>
+<line x1="2065" y1="676.0" x2="2130" y2="676.0" stroke="#ea580c" stroke-width="1.9" marker-end="url(#arrow)"/>
+<line x1="2065" y1="791.0" x2="2130" y2="550" stroke="#ea580c" stroke-width="1.9" marker-end="url(#arrow)"/>
+<rect x="80" y="1100" width="520" height="250" rx="18" fill="#ffffff" stroke="#0f766e" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="340.0" y="1134" font-size="21" font-weight="800" fill="#0f172a" text-anchor="middle">A. Process-Centered SSL</text>
+<text x="104" y="1170" font-size="16" font-weight="400" fill="#334155" text-anchor="start">1. masked spatiotemporal reconstruction</text>
+<text x="104" y="1194" font-size="16" font-weight="400" fill="#334155" text-anchor="start">2. cross-modal masked prediction</text>
+<text x="104" y="1218" font-size="16" font-weight="400" fill="#334155" text-anchor="start">3. future vegetation trajectory prediction</text>
+<text x="104" y="1242" font-size="16" font-weight="400" fill="#334155" text-anchor="start">4. phenology pseudo-transition prediction</text>
+<text x="104" y="1266" font-size="16" font-weight="400" fill="#334155" text-anchor="start">5. drought stress trajectory prediction</text>
+<rect x="660" y="1100" width="520" height="250" rx="18" fill="#ffffff" stroke="#9333ea" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="920.0" y="1134" font-size="21" font-weight="800" fill="#0f172a" text-anchor="middle">B. Weak Physics Regularisation</text>
+<text x="684" y="1170" font-size="16" font-weight="400" fill="#334155" text-anchor="start">Water: ΔSM = P + I_latent − ET − R − D + ε</text>
+<text x="684" y="1194" font-size="16" font-weight="400" fill="#334155" text-anchor="start">Growth: AGDD + water + radiation limits</text>
+<text x="684" y="1218" font-size="16" font-weight="400" fill="#334155" text-anchor="start">uncertainty-weighted soft losses</text>
+<text x="684" y="1242" font-size="16" font-weight="400" fill="#334155" text-anchor="start">accepted only if consistency improves</text>
+<text x="684" y="1266" font-size="16" font-weight="400" fill="#334155" text-anchor="start">without predictive collapse</text>
+<rect x="1240" y="1100" width="520" height="250" rx="18" fill="#ffffff" stroke="#be123c" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="1500.0" y="1134" font-size="21" font-weight="800" fill="#0f172a" text-anchor="middle">C. Temporal-DAG Diagnostics</text>
+<text x="1264" y="1170" font-size="16" font-weight="400" fill="#334155" text-anchor="start">No same-time causal cycles</text>
+<text x="1264" y="1194" font-size="16" font-weight="400" fill="#334155" text-anchor="start">CropStageₜ → Vegetationₜ</text>
+<text x="1264" y="1218" font-size="16" font-weight="400" fill="#334155" text-anchor="start">Vegetationₜ → CropStageₜ₊₁</text>
+<text x="1264" y="1242" font-size="16" font-weight="400" fill="#334155" text-anchor="start">sign, monotonicity and invariance checks</text>
+<text x="1264" y="1266" font-size="16" font-weight="400" fill="#334155" text-anchor="start">scenario outputs ≠ causal claims unless validated</text>
+<rect x="1820" y="1100" width="520" height="250" rx="18" fill="#ffffff" stroke="#334155" stroke-width="2.5" filter="url(#softShadow)"/>
+<text x="2080.0" y="1134" font-size="21" font-weight="800" fill="#0f172a" text-anchor="middle">D. Baselines and Gates</text>
+<text x="1844" y="1170" font-size="16" font-weight="400" fill="#334155" text-anchor="start">climatology, persistence, GDD, SPI/SPEI/VHI</text>
+<text x="1844" y="1194" font-size="16" font-weight="400" fill="#334155" text-anchor="start">RF/XGBoost, LSTM/TCN</text>
+<text x="1844" y="1218" font-size="16" font-weight="400" fill="#334155" text-anchor="start">single-modality and no-physics ablations</text>
+<text x="1844" y="1242" font-size="16" font-weight="400" fill="#334155" text-anchor="start">G0–G7 go/no-go acceptance gates</text>
+<text x="1844" y="1266" font-size="16" font-weight="400" fill="#334155" text-anchor="start">reproducible configs + fixed splits</text>
+<path d="M 340 1100 C 420 1015, 640 990, 1010 950" fill="none" stroke="#0f766e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+<path d="M 920 1100 C 1020 1000, 1260 970, 1505 910" fill="none" stroke="#9333ea" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+<path d="M 1500 1100 C 1520 1015, 1530 970, 1505 910" fill="none" stroke="#be123c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+<path d="M 2070 1100 C 2160 1000, 2210 875, 2250 740" fill="none" stroke="#334155" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+<rect x="55" y="1440" width="2290" height="70" rx="18" fill="#0f172a"/>
+<text x="1200.0" y="1468" font-size="18" font-weight="900" fill="#ffffff" text-anchor="middle">Deferred beyond Year‑1 MVP</text>
+<text x="1200.0" y="1496" font-size="17" font-weight="500" fill="#cbd5e1" text-anchor="middle">Formal counterfactual module • neural causal discovery • socioeconomic food-security layer • global multi-biome scaling • full process-model coupling</text>
+</svg>
