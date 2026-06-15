@@ -1,0 +1,71 @@
+# config/data_config.yaml
+
+project:
+  name: "AgroSSM-Pilot"
+  version: "3.0"
+
+pilot_region:
+  name: "US Corn Belt"
+  states: ["Iowa", "Illinois"]
+  crop: "maize"
+  bbox:  # Bounding box [west, south, east, north] in EPSG:4326
+    west: -96.7
+    south: 37.0
+    east: -87.5
+    north: 43.5
+
+temporal:
+  start_year: 2017
+  end_year: 2023
+  growing_season_start_doy: 91   # April 1
+  growing_season_end_doy: 304    # October 31
+  composite_days: 5               # 5-day composites
+  sequence_length: 30             # ~30 composites per growing season
+
+patches:
+  size: 64                        # 64x64 pixels
+  resolution_m: 10                # 10 meters per pixel
+  min_crop_fraction: 0.7          # At least 70% maize pixels
+  num_patches: 2000               # Target number of patches
+  min_counties: 50                # Cover at least 50 counties
+
+splits:
+  train_years: [2017, 2018, 2019, 2020, 2021]
+  val_strategy: "spatial_temporal_blocked_kfold"
+  num_folds: 5
+  test_years: [2022]
+  extreme_holdout_years: [2023]
+  spatial_block_size_km: 50       # For bootstrap evaluation
+
+data_sources:
+  optical:
+    product: "Sentinel-2 L2A"
+    bands: ["B2", "B3", "B4", "B8", "B11", "B12"]  # Blue, Green, Red, NIR, SWIR1, SWIR2
+    band_wavelengths_nm: [490, 560, 665, 842, 1610, 2190]
+    cloud_threshold: 0.2          # Max 20% cloud cover per composite
+  weather:
+    product: "ERA5"
+    variables: ["t2m_min", "t2m_max", "t2m_mean", "total_precipitation",
+                "u10", "v10", "d2m", "ssrd", "pet"]
+    spatial_resolution_km: 31
+  soil:
+    product: "SoilGrids"
+    variables: ["clay", "sand", "soc", "phh2o", "cec", "bdod", "ocd"]
+    spatial_resolution_m: 250
+  crop_mask:
+    product: "USDA CDL"
+    maize_class_id: 1
+  yield_labels:
+    product: "USDA NASS"
+    level: "county"
+    variable: "YIELD"
+    commodity: "CORN"
+  irrigation:
+    product: "WorldCereal"       # WorldCereal for 2021+; GMIA as static fallback
+    fallback: "GMIA"             # Global Map of Irrigation Areas (static)
+    preferred_covariate: true    # Use when available; modality mask handles absence
+    spatial_resolution_m: 10     # WorldCereal at 10m; GMIA at ~10km (patch-level)
+
+normalization:
+  strategy: "per_channel_standardization"  # z-score: (x - mean) / std
+  compute_from: "train_only"               # INV-D3: never include val/test

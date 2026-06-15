@@ -1,0 +1,95 @@
+# config/model_config.yaml
+
+model:
+  name: "AgroSSM"
+  embed_dim: 256                  # Token embedding dimension
+  
+  tokenizer:
+    hypernetwork_hidden: 128      # Hidden dim of metadata-to-weights MLP
+    hypernetwork_layers: 2        # Number of MLP layers in hypernetwork
+    num_channels_max: 26          # Max distinct input channels (25 base + 1 irrigation)
+    
+  backbone:
+    num_blocks: 12                # Total blocks (SSM + SWA + MLA)
+    # Interleave pattern: SSM, SWA, SSM, MLA, SSM, SWA, SSM, MLA, SSM, SWA, SSM, MLA
+    # That's 6 SSM, 3 SWA, 3 MLA for 12 blocks
+    ssm:
+      state_dim: 64               # SSM recurrent state dimension per sub-state
+      # Total state = 4 * state_dim = 256 (h_water, h_stress, h_agdd, h_free)
+      expand_factor: 2            # Mamba expansion factor
+      dt_rank: "auto"             # Discretization rank
+    swa:
+      window_size: 5              # Attend to 5 nearest time steps
+      num_heads: 8
+      global_every_n: 4           # Every 4th SWA block uses full attention
+    mla:
+      latent_dim: 32              # Compressed KV dimension
+      num_heads: 8
+
+  moe:
+    num_experts: 8
+    expert_hidden_dim: 512        # Each expert FFN hidden dim
+    top_k: 1                      # Top-1 routing
+    load_balance_weight: 0.01     # Auxiliary load-balance loss weight
+
+  heads:
+    primary:
+      stress:
+        type: "binary_classification"
+        hidden_dim: 128
+        output_dim: 1             # Stress probability
+      phenology:
+        type: "regression"
+        hidden_dim: 128
+        output_dim: 1             # Days until next transition
+      yield_risk:
+        type: "regression"
+        hidden_dim: 128
+        output_dim: 1             # Yield anomaly percentage
+    auxiliary:
+      drought_trajectory:
+        type: "multi_step_regression"
+        hidden_dim: 128
+        output_dim: 3             # t+1, t+2, t+3 stress trajectory
+      residual_water:
+        type: "regression_with_uncertainty"
+        hidden_dim: 128
+        output_dim: 2             # I_latent mean + log_variance
+
+training:
+  optimizer: "AdamW"
+  lr: 1.0e-4
+  weight_decay: 0.01
+  scheduler: "cosine_warmup"
+  warmup_epochs: 5
+  max_epochs: 100
+  batch_size: 16
+  gradient_accumulation_steps: 4  # Effective batch = 64
+  gradient_clip_norm: 1.0
+  mixed_precision: "bf16"         # BF16 mixed precision
+  
+  modality_dropout: 0.15          # INV-T2
+  
+  physics:
+    water_balance_lambda_max: 0.1
+    agdd_lambda_max: 0.1
+    stress_asymmetry_lambda_max: 0.05  # INV-A6: asymmetry prior on h_stress
+    stress_asymmetry_factor: 3.0       # Decreases penalized 3× more than increases
+    dag_lambda_max: 0.05
+    warmup_epochs: 10             # INV-T1
+    
+  ssl:
+    ssl_a_weight: 1.0
+    ssl_b_weight: 0.5
+    ssl_c_weight: 0.5
+    mask_ratio_spatial: 0.75      # 75% of patches masked per time step
+    mask_ratio_temporal: 0.20     # 20% of time steps fully masked
+    
+  moe_load_balance_weight: 0.01
+  calibration_weight: 0.01
+
+checkpoint:
+  save_every_epoch: true          # INV-T4
+  save_dir: "checkpoints/"
+  monitor_metric: "val/stress_auroc"
+  mode: "max"

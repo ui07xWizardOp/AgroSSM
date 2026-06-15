@@ -1,0 +1,10 @@
+# config/ssl_config.yaml
+
+# Configuration placeholder for SSL pretraining tasks (SSL-A, SSL-B, SSL-C)
+# Detailed overrides for reconstruction ratios, crop developmental thresholds, and trajectory horizons.
+ssl_pretrain:
+  mask_ratio_spatial: 0.75
+  mask_ratio_temporal: 0.20
+  transition_prediction_horizon: 10 # composite steps ahead
+  trajectory_horizons: [1, 2, 3]    # 5, 10, 15 days ahead prediction
+  eigenvalue_monitor_frequency: 100 # iterations

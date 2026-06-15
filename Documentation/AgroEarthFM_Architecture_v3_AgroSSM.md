@@ -85,7 +85,7 @@ Multi-Resolution Inputs (optical, weather, soil, crop-calendar, irrigation*)
         |
 [4] Shared Agro-Ecosystem State  z_t  (SSM hidden state = physical memory)
         |
-[5] Output Heads: Crop Stress | Phenology | Yield-Risk | Drought Traj | Residual-Water/Uncertainty
+[5] Output Heads: Spatial Crop Stress [4x4] | Phenology | Yield-Risk | Drought Traj | Residual-Water/Uncertainty
         |
 [6] Physics-as-State-Regularizer (water balance + AGDD on z_t) + Temporal-DAG sign prior
 ```
@@ -102,7 +102,7 @@ Following the unified-encoder trend (Gemma-style unified encoding; DOFA's wavele
 
 | Metadata field | Example values |
 |---|---|
-| Central wavelength / variable id | 490nm (Blue), 842nm (NIR), "precip", "T_mean", "clay%" |
+| Central wavelength / variable id | 490nm (Blue), 842nm (NIR), "precip", "T_mean", "clay%", "irrigation" |
 | Native spatial resolution | 10m, 31km, 250m |
 | Native temporal resolution | 5-day, daily, static |
 | Modality-present flag | 1 / 0 |
@@ -142,14 +142,14 @@ State-space models scale **O(n)** in sequence length and carry an explicit recur
 
 > **The SSM hidden state is structured to represent physical accumulators**: soil-water memory, cumulative stress, and accumulated growing degree days (AGDD).
 
-This aligns the architecture with the agronomy: drought is a long-memory accumulation-and-recovery process, and an SSM hidden state is a natural accumulator. We partition the hidden state into named sub-blocks:
+This aligns the architecture with the agronomy: drought is a long-memory accumulation-and-recovery process, and an SSM hidden state is a natural accumulator. We use **4 truly independent SSM sub-modules**, each with its own A, B, C, D, Δ parameters:
 
 | Hidden sub-state | Physical meaning | Regularized by |
 |---|---|---|
-| `h_water` | Soil-water memory / balance | Water-balance residual (Section 7.1) |
-| `h_stress` | Cumulative crop stress | Stress-monotonicity prior |
-| `h_agdd` | Accumulated thermal time | AGDD growth constraint (Section 7.2) |
-| `h_free` | Unconstrained learned dynamics | (none — free capacity) |
+| `h_water` (via `ssm_water`) | Soil-water memory / balance | Water-balance residual (Section 7.1) |
+| `h_stress` (via `ssm_stress`) | Cumulative crop stress | Stress-asymmetry prior (INV-A6) |
+| `h_agdd` (via `ssm_agdd`) | Accumulated thermal time | AGDD growth constraint (Section 7.2) |
+| `h_free` (via `ssm_free`) | Unconstrained learned dynamics | (none — free capacity) |
 
 **Why this is novel:** prior work applies physics losses only at the *output*. AgroSSM applies them to the *recurrent state*, so the temporal dynamics themselves are physically constrained. This is the central, falsifiable architectural claim.
 
@@ -233,7 +233,7 @@ residual_t = decode_SM(h_water_t) - decode_SM(h_water_{t-1})
 L_water = w_data * || residual_t ||^2
 ```
 
-The SSM water sub-state must evolve consistently with the water-balance equation. `I_latent` is inferred (latent residual water input; NOT "irrigation detection", per v2.3 policy).
+The SSM water sub-state must evolve consistently with the water-balance equation. `I_obs_t` is 0.0 when data is missing. R and D are explicitly computed (SCS-CN for runoff, exponential decay for drainage). `decode_SM` uses Softplus for non-negativity and is shared across all SSM blocks. `I_latent` is inferred (latent residual water input; NOT "irrigation detection", per v2.3 policy).
 
 ### 7.2 AGDD Growth on `h_agdd`
 
@@ -244,16 +244,33 @@ L_growth = || decode_AGDD(h_agdd_t) - AGDD_t ||^2
          + monotonicity_penalty(h_agdd)   # AGDD cannot decrease
 ```
 
-### 7.3 Temporal-DAG Sign Prior (Preserved, Soft)
+`decode_AGDD` uses Softplus for non-negativity and is shared across all SSM blocks.
+
+### 7.3 Stress Asymmetry on `h_stress`
+
+Unlike thermal time (which is strictly non-decreasing), crop stress can recover. However, recovery is biologically slower than stress onset (damage takes time to heal). This is modeled via a stress asymmetry prior:
+
+```text
+delta_h_stress_t = decode_stress(h_stress_t) - decode_stress(h_stress_{t-1})
+L_stress_asym = mean(relu(-delta_h_stress_t) * asymmetry_factor)
+```
+
+Where:
+- `asymmetry_factor` = 3.0 (default; stress decreases are penalized 3x more than increases).
+- `relu(-delta)` selects only decreasing steps (recovery).
+- `decode_stress` uses a `Linear(state_dim, 1)` layer with NO activation (stress is a latent quantity that can be negative during recovery phases) and standard Xavier uniform initialization. It is shared across all SSM blocks.
+
+### 7.4 Temporal-DAG Sign Prior (Preserved, Soft)
 
 Unchanged from v2.3: temporal DAG is a structural prior / inductive bias, **not** causal discovery. Sign-consistency target: **>=90%** consistent with agronomic priors (not 100%; biological systems are non-monotonic).
 
-### 7.4 Total Loss
+### 7.5 Total Loss
 
 ```text
 L_total = Sum_i alpha_i * L_SSL_i              # SSL-A/B/C (from v2.3)
         + lambda_water(t) * L_water           # state-regularizer (dynamic warmup)
         + lambda_growth(t) * L_growth         # state-regularizer (dynamic warmup)
+        + lambda_stress_asym(t) * L_stress_asym    # stress asymmetry prior (INV-A6)
         + lambda_DAG(t) * L_temporal_DAG      # soft sign prior
         + lambda_balance * L_moe_loadbalance  # MoE load balancing
         + lambda_calib * L_calibration
