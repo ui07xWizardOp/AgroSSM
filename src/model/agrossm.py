@@ -80,7 +80,7 @@ class AgroSSM(nn.Module):
         precipitation = patch_dict["weather"][:, :, 3]
         t2m_mean = patch_dict["weather"][:, :, 2]
         et = patch_dict["weather"][:, :, 8] # pet
-        i_obs = torch.zeros_like(precipitation) # simplified logic, missing real aggregation
+        i_obs = (patch_dict["irrigation"].mean(dim=[-2, -1]) * patch_dict["irrigation_mask"].squeeze(-1)).unsqueeze(-1).repeat(1, T)
         i_latent = residual_water[..., 0] # mean prediction
         soil_properties = patch_dict["soil"]
         planting_doy = patch_dict["calendar"][:, 1]
