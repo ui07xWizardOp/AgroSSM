@@ -22,31 +22,74 @@ class PatchDataset(Dataset):
         Loads one patch, applies normalization using training-set statistics (INV-D3),
         applies modality dropout if self.training (INV-T2), and returns the dictionary.
         """
-        # Dummy data matching the schema required in documentation
-        # In a real scenario, this would load data from .npz or .zarr
-        T = 30
-        C_opt = 6
-        C_weather = 9
-        C_soil = 7
-        C_cal = 3
-        H, W = 64, 64
-
-        # Base modalities
-        optical = torch.randn(T, C_opt, H, W)
-        weather = torch.randn(T, C_weather)
-        soil = torch.randn(C_soil)
-        calendar = torch.randn(C_cal)
-        irrigation = torch.randint(0, 2, (H, W)).float()
-
-        # Masks
-        optical_mask = torch.ones(T, C_opt)
-        # Introduce some fake cloud masking for testing
-        optical_mask[5, :] = 0.0
-
-        weather_mask = torch.ones(T, C_weather)
-        soil_mask = torch.ones(C_soil)
-        calendar_mask = torch.ones(C_cal)
-        irrigation_mask = torch.tensor([1.0])
+        import os
+        
+        # Check if actual data is available in the directory
+        real_files = []
+        if os.path.exists(self.data_path) and os.path.isdir(self.data_path):
+            real_files = [f for f in os.listdir(self.data_path) if f.endswith(".npz")]
+            
+        if len(real_files) > 0:
+            # Load real compiled patch
+            file_path = os.path.join(self.data_path, real_files[idx % len(real_files)])
+            data = np.load(file_path, allow_pickle=True)
+            
+            # Extract arrays
+            optical = torch.from_numpy(data["optical"])
+            optical_mask = torch.from_numpy(data["optical_mask"])
+            weather = torch.from_numpy(data["weather"])
+            weather_mask = torch.from_numpy(data["weather_mask"])
+            soil = torch.from_numpy(data["soil"])
+            soil_mask = torch.from_numpy(data["soil_mask"])
+            calendar = torch.from_numpy(data["calendar"])
+            calendar_mask = torch.from_numpy(data["calendar_mask"])
+            irrigation = torch.from_numpy(data["irrigation"])
+            irrigation_mask = torch.from_numpy(data["irrigation_mask"])
+            
+            doy_sequence = torch.from_numpy(data["doy_sequence"])
+            stress_label = torch.from_numpy(data["stress_label"])
+            phenology_label = torch.from_numpy(data["phenology_label"])
+            yield_anomaly = float(data["yield_anomaly"])
+            
+            patch_id = str(data["patch_id"])
+            county_fips = str(data["county_fips"])
+            year = int(data["year"])
+            lat = float(data["lat"])
+            lon = float(data["lon"])
+            T = optical.shape[0]
+        else:
+            # Fallback to dummy data for testing
+            T = 30
+            C_opt = 6
+            C_weather = 9
+            C_soil = 7
+            C_cal = 3
+            H, W = 64, 64
+    
+            optical = torch.randn(T, C_opt, H, W)
+            weather = torch.randn(T, C_weather)
+            soil = torch.randn(C_soil)
+            calendar = torch.randn(C_cal)
+            irrigation = torch.randint(0, 2, (H, W)).float()
+    
+            optical_mask = torch.ones(T, C_opt)
+            optical_mask[5, :] = 0.0
+    
+            weather_mask = torch.ones(T, C_weather)
+            soil_mask = torch.ones(C_soil)
+            calendar_mask = torch.ones(C_cal)
+            irrigation_mask = torch.tensor([1.0])
+            
+            doy_sequence = torch.arange(91, 91 + T * 5, 5).float()
+            stress_label = torch.randint(0, 2, (T, 4, 4)).float()
+            phenology_label = torch.randn(T)
+            yield_anomaly = 5.0
+            
+            patch_id = f"patch_{idx}"
+            county_fips = "19001"
+            year = 2020
+            lat = 41.5
+            lon = -93.5
 
         # Modality dropout (INV-T2)
         if self.training:
